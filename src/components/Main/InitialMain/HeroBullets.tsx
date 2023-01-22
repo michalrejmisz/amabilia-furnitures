@@ -13,6 +13,7 @@ import {
 } from '@mantine/core';
 import { IconCheck } from '@tabler/icons';
 import image from './image.svg';
+import BottomContactArea from "./BottomContactArea";
 
 const useStyles = createStyles((theme) => ({
     inner: {
@@ -122,7 +123,6 @@ export function HeroBullets() {
                             </Grid>
                         </Group>
                     </div>
-
                 </div>
             </Container>
         </div>
