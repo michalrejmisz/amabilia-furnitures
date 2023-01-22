@@ -1,19 +1,31 @@
-import { createStyles, Header, Menu, Group, Center, Burger, Container } from '@mantine/core';
+import { createStyles, Header, Menu, Group, Center, Burger, Container, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons';
+import { useState } from 'react'
 import { MantineLogo } from '@mantine/ds';
+import Logo from './Logo';
 
 const useStyles = createStyles((theme) => ({
     header: {
         backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
         borderBottom: 0,
+        zIndex: 100,
+        position: "sticky",
+        transition: '0.2s',
+    },
+
+    transparent: {
+        backgroundColor: "transparent",
+        transition: '0.2s',
     },
 
     inner: {
-        height: 65,
+        height: 80,
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginRight: "5vw",
+        marginLeft: "5vw",
     },
 
     links: {
@@ -31,18 +43,25 @@ const useStyles = createStyles((theme) => ({
     link: {
         display: 'block',
         lineHeight: 1,
-        padding: '8px 12px',
+        // padding: '8px 12px',
+        padding: '8px 25px',
         borderRadius: theme.radius.sm,
         textDecoration: 'none',
         color: theme.white,
-        fontSize: theme.fontSizes.md,
-        fontWeight: 500,
+        fontSize: "15px",
+        letterSpacing: ".65px",
+        fontWeight: 'bold',
+        fontFamily: 'Roboto, sans-serif',
+        textTransform: 'uppercase',
 
+        // '&:hover': {
+        //     backgroundColor: theme.fn.darken(
+        //         theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
+        //         0.1
+        //     ),
+        // },
         '&:hover': {
-            backgroundColor: theme.fn.lighten(
-                theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background!,
-                0.1
-            ),
+            backgroundColor: theme.colors[theme.primaryColor][8],
         },
     },
 
@@ -52,10 +71,15 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface HeaderSearchProps {
+    transparent: boolean;
     links: { link: string; label: string; links?: { link: string; label: string }[] }[];
 }
 
-export function HeaderMenuColored({ links }: HeaderSearchProps) {
+interface HeaderTransparentProp {
+    transparent: boolean;
+}
+
+export function HeaderMenuColored({ links, transparent }: HeaderSearchProps ) {
     const [opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
 
@@ -97,12 +121,26 @@ export function HeaderMenuColored({ links }: HeaderSearchProps) {
     });
 
     return (
-        <Header height={65} className={classes.header} mb={120}>
-            <Container>
+        // <Header height={80} className={`${classes.header}} ${transparent && classes.transparent}`}>
+        <Header height={80} className={`${classes.header} ${transparent && classes.transparent}`}>
+            {/*<Container size={"lg"}>*/}
                 <div className={classes.inner}>
-                    <MantineLogo size={28} inverted />
+                    <div className={classes.inner} style={{marginLeft: 0}}>
+                        <Logo/>
+                        <Title order={2} color="white">Amabilia</Title>
+                    </div>
                     <Group spacing={5} className={classes.links}>
                         {items}
+                        <a
+                            key={'x'}
+                            href={'x'}
+                            className={classes.link}
+                            onClick={(event) => event.preventDefault()}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ffffff" className="w-6 h-6" style={{width: '30px', height: '30px'}}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                            </svg>
+                        </a>
                     </Group>
                     <Burger
                         opened={opened}
@@ -112,7 +150,7 @@ export function HeaderMenuColored({ links }: HeaderSearchProps) {
                         color="#fff"
                     />
                 </div>
-            </Container>
+            {/*</Container>*/}
         </Header>
     );
 }

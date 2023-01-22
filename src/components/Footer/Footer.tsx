@@ -1,13 +1,24 @@
-import {Footer, Container} from "@mantine/core";
+import {Container, createStyles} from "@mantine/core";
 
-const FooterComponent = () => {
+const useStyles = createStyles((theme) => ({
+    footer: {
+        // backgroundColor: theme.colors[theme.primaryColor][9],
+        backgroundColor: theme.colors.gray[7],
+        minHeight: "30vh",
+    }
+}));
+
+
+const Footer = () => {
+    const { classes } = useStyles();
+
     return(
-        <Footer>
+        <footer className={classes.footer}>
             <Container>
-                Test
+                Amabilia Kontakt
             </Container>
-        </Footer>
+        </footer>
     )
 }
 
-export default FooterComponent;
+export default Footer;

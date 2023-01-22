@@ -7,6 +7,7 @@ import {HeaderMenuColored} from "./components/Header/HeaderMenuColored";
 import Main from './components/pages/Main';
 import {CardsCarousel} from "./components/Main/ProductsOffer/CardCarousel";
 import {LeadGrid} from "./components/UI/LeadGrid";
+import Footer from "./components/Footer/Footer";
 
 const links = [
     {"link": "/contact", "label": "Kontakt"},
@@ -16,11 +17,15 @@ const links = [
 ];
 // {[{"link": "a", "label": "a"}, {"link": "b", "label": "b", "links" : [{"link": "second", "label": "second"}]}]}
 function App() {
-    const [scrollTop, setScrollTop] = useState(0);
+    const [scrollTop, setScrollTop] = useState(true);
 
     useEffect(() => {
         const handleScroll = (event) => {
-            setScrollTop(window.scrollY);
+            if(window.scrollY > 0){
+                setScrollTop(false)
+            } else {
+                setScrollTop(true)
+            }
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -38,13 +43,14 @@ function App() {
           }}
       >
         <div className="App">
-          <HeaderMenuColored links={links}/>
             <main>
+                <HeaderMenuColored links={links} transparent={scrollTop}/>
                 <Main/>
                 {/*<Container my="md" color="lime-4">*/}
                     {/*<CardsCarousel/>*/}
                     {/*<LeadGrid/>*/}
                 {/*</Container>*/}
+                <Footer/>
             </main>
         </div>
       </MantineProvider>
