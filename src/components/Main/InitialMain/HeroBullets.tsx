@@ -108,22 +108,23 @@ export function HeroBullets() {
                             </List.Item>
                         </List>
 
-                        <Group mt={30}>
-                            <Grid>
-                                <Grid.Col xs={6}>
-                                    <Button radius="md" size="xl" className={classes.control} >
-                                        Kliknij i zadzwoń! <br /> 777 888 999
-                                    </Button>
-                                </Grid.Col>
-                                <Grid.Col xs={6}>
-                                    <Button variant="default" radius="md" size="xl" className={classes.control}>
-                                        Kliknij, a my <br/> zadzwonimy do Ciebie!
-                                    </Button>
-                                </Grid.Col>
-                            </Grid>
-                        </Group>
+                        {/*<Group mt={30}>*/}
+                        {/*    <Grid>*/}
+                        {/*        /!*<Grid.Col xs={6}>*!/*/}
+                        {/*        /!*    <Button radius="md" size="xl" className={classes.control} >*!/*/}
+                        {/*        /!*        Kliknij i zadzwoń! <br /> 777 888 999*!/*/}
+                        {/*        /!*    </Button>*!/*/}
+                        {/*        /!*</Grid.Col>*!/*/}
+                        {/*        <Grid.Col xs={6}>*/}
+                        {/*            <Button variant="default" radius="md" size="xl" className={classes.control}>*/}
+                        {/*                Przejdź do sklepu!*/}
+                        {/*            </Button>*/}
+                        {/*        </Grid.Col>*/}
+                        {/*    </Grid>*/}
+                        {/*</Group>*/}
                     </div>
                 </div>
+                <BottomContactArea/>
             </Container>
         </div>
     );

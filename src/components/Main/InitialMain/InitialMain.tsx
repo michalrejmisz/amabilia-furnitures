@@ -1,11 +1,8 @@
 import {Container, createStyles, Image, Title, SimpleGrid} from "@mantine/core";
 import {useViewportSize} from "@mantine/hooks";
 import BackGroundWithShapes from "./BackGroundWithShapes";
-import {LeadGrid} from "./LeadGrid";
 import {HeroBullets} from "./HeroBullets";
-import {HeaderBullets2} from "./HeaderBullets2";
 import BottomContactArea from "./BottomContactArea";
-
 
 interface ViewPortSize {
     viewPortHeight: number,
@@ -14,7 +11,7 @@ interface ViewPortSize {
 
 const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPortSize) => ({
     container: {
-        marginTop: '15vh',
+        // marginTop: '15vh',
     }
 
 }));
@@ -28,7 +25,6 @@ const InitialMain = () => {
         <BackGroundWithShapes>
             <Container size={"lg"} className={classes.container}>
                 <HeroBullets/>
-                <BottomContactArea/>
             </Container>
         </BackGroundWithShapes>
     )

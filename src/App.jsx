@@ -39,7 +39,7 @@ function App() {
   return (
       <MantineProvider
           theme={{
-              primaryColor: 'lime',
+              primaryColor: 'blue',
           }}
       >
         <div className="App">
