@@ -83,28 +83,29 @@ export function HeroBullets() {
                         <Title className={classes.title}>
                             <span className={classes.highlight}>Amabilia</span> Nieźle <br /> Cię urządzimy
                         </Title>
-                        <Text color="dimmed" mt="md">
+                        <Text color="white" mt="md">
                             W ofercie znajdą Państwo nie tylko tanie meble używane i poleasingowe, ale również końcówki serii w bardzo dobrych cenach.
                         </Text>
 
                         <List
+                            style={{textAlign: "left"}}
                             mt={30}
                             spacing="md"
                             size="md"
                             icon={
                                 <ThemeIcon size={20} radius="xl" color={theme.colors[theme.primaryColor][4]}>
-                                    {/*<IconCheck size={12} stroke={1.5} />*/}
+                                    <IconCheck size={18} stroke={1.5} />
                                 </ThemeIcon>
                             }
                         >
-                            <List.Item>
-                                <b>Meble poleasingowe</b> – w naszej ofercie znajdą Państwo końcówki serii oraz meble poleasingowe
+                            <List.Item style={{color: theme.colors[theme.primaryColor][2]}}>
+                                <span className={classes.highlight}><b style={{color: "white"}}>Meble poleasingowe</b></span> – w naszej ofercie znajdą Państwo końcówki serii oraz meble poleasingowe
                             </List.Item>
-                            <List.Item>
-                                <b>Rabat</b> – Złóż zamówienie z płatnością przy odbiorze, a otrzymasz rabat!
+                            <List.Item style={{color: theme.colors[theme.primaryColor][2]}}>
+                                <span className={classes.highlight}><b style={{color: "white"}}>Rabat</b></span>  – Złóż zamówienie z płatnością przy odbiorze, a otrzymasz rabat!
                             </List.Item>
-                            <List.Item>
-                                <b>Darmowa Dostawa</b> – w zależności od wielkości zamówienia oraz odległości od klienta możliwa jest darmowa dostawa,<br /> zadzwoń a napewno się dogadamy!
+                            <List.Item style={{color: theme.colors[theme.primaryColor][2]}}>
+                                <span className={classes.highlight}><b style={{color: "white"}}>Darmowa dostawa</b></span> – w zależności od wielkości zamówienia oraz odległości od klienta możliwa jest darmowa dostawa,<br /> zadzwoń a napewno się dogadamy!
                             </List.Item>
                         </List>
 
