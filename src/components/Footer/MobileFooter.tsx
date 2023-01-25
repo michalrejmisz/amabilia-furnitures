@@ -12,12 +12,12 @@ const useStyles = createStyles((theme) => ({
         overflow: 'hidden',
         textAlign: 'center',
         borderTop: `solid 1px ${theme.colors[theme.primaryColor][3]}`,
-        paddingTop: '10px',
+        paddingTop: '5px',
 
         [theme.fn.smallerThan('sm')]: {
 
             display: 'block',
-            height: '80px',
+            height: '60px',
             width: '100%',
             backgroundColor: theme.colors[theme.primaryColor][9],
         },
@@ -33,10 +33,11 @@ const useStyles = createStyles((theme) => ({
     icon: {
         display: 'flex',
         flexDirection: 'column',
-        marginRight: theme.spacing.md,
         backgroundImage: 'none',
         width: '100%',
         height: '100%',
+        margin: '8px',
+        marginTop: '0px',
             // variant === 'gradient'
             //     ? `linear-gradient(135deg, ${theme.colors[theme.primaryColor][4]} 0%, ${
             //         theme.colors[theme.primaryColor][6]
@@ -76,7 +77,7 @@ const FooterIcons = ({ icon: Icon, title} : ContactIconProps) => {
     return (
         <Fragment>
             <ThemeIcon className={classes.icon}>
-                <Icon size={50} className={classes.svg}/>
+                <Icon size={35} className={classes.svg}/>
                 {title}
             </ThemeIcon>
         </Fragment>

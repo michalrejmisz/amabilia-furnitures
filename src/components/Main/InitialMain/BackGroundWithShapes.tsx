@@ -34,6 +34,10 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
             backgroundColor: theme.colors[theme.primaryColor][6],
             minHeight: '854px',
 
+            // [theme.fn.smallerThan('md')]: {
+            //     height: 'stretch',
+            // },
+
             svg: {
                 position: "absolute",
                 display: "block",

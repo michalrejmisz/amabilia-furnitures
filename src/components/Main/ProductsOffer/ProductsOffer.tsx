@@ -2,6 +2,7 @@ import {Wrapper} from "@storybook/addon-docs";
 import {Button, createStyles, Paper, Text, Title, Center, Grid, Container} from "@mantine/core";
 import {Comment} from "postcss";
 import {Carousel} from "@mantine/carousel";
+import {CardsCarousel} from "./CardCarousel";
 
 const data = [
     {
@@ -33,6 +34,7 @@ const data = [
 const useStyles = createStyles((theme) => ({
     wrapper: {
         minHeight: '100vh',
+        paddingBottom: '50px',
         // minHeight: '100vh',
         // minHeight: 'fill-available, -moz-available, -webkit-fill-available',
 
@@ -56,6 +58,7 @@ const useStyles = createStyles((theme) => ({
         marginTop: '100px',
         height: '100%',
         padding: '10px',
+        // marginBottom: '50px',
     },
 
     ourOfferHeader: {
@@ -135,20 +138,23 @@ function Card({ image, title, category }: CardProps) {
 
 const ProductsOffer = () =>{
     const { classes } = useStyles();
-    const cards = data.map((item)=>(
-        <Carousel.Slide key={item.title}>
-            <Card {...item}></Card>
-        </Carousel.Slide>
-    ))
+    // const cards = data.map((item)=>(
+    //     <Carousel.Slide key={item.title}>
+    //         <Card {...item}></Card>
+    //     </Carousel.Slide>
+    // ))
     return(
         // <Container size={"lg"} style={{height: '100vh'}}>
         <Container size={"lg"} className={classes.wrapper}>
             <div className={classes.products}>
                 <div className={classes.ourOfferHeader}>Nasza oferta</div>
+                <CardsCarousel/>
                 <Grid>
                     {data.map((item) => (<Grid.Col xs={4} md={4} lg={3}><Card {...item}></Card></Grid.Col>))}
                 </Grid>
             </div>
+
+
         </Container>
     );
 }

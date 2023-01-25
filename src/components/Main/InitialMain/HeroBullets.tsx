@@ -13,6 +13,7 @@ import {
 } from '@mantine/core';
 import { IconCheck } from '@tabler/icons';
 import image from './image.svg';
+import {Fragment} from 'react';
 import BottomContactArea from "./BottomContactArea";
 
 const useStyles = createStyles((theme) => ({
@@ -76,7 +77,7 @@ export function HeroBullets() {
     const { classes } = useStyles();
     const theme = useMantineTheme();
     return (
-        <div>
+        <Fragment>
             <Container size={"lg"}>
                 <div className={classes.inner}>
                     <Image src={process.env.PUBLIC_URL + "/images/desk_main.png"} className={classes.image} />
@@ -128,6 +129,6 @@ export function HeroBullets() {
                 </div>
                 <BottomContactArea/>
             </Container>
-        </div>
+        </Fragment>
     );
 }

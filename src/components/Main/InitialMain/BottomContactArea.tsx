@@ -75,16 +75,6 @@ const useStyles = createStyles((theme) => ({
 
     },
 
-    // svg2: {
-    //     // linearGradient: "90deg, ${theme.colors[theme.primaryColor][4]}, ${theme.colors[theme.primaryColor][8]}",
-    //     // linearGradient: "90deg, red, blue",
-    //     stroke: theme.colors[theme.primaryColor][8],
-    //     [theme.fn.smallerThan('md')]: {
-    //         display: 'none',
-    //     }
-    // },
-
-
     gridClass: {
         gap: '30px',
 
@@ -108,20 +98,6 @@ const CardExamples = ({svg, title, text} : CardProps) => {
 
     return(
         <Card radius={"lg"} withBorder className={classes.card}>
-            {/* top, right, left margins are negative – -1 * theme.spacing.xl */}
-            {/*<Card.Section my={"lg"}>*/}
-            {/*    First section*/}
-            {/*    <Text>First text</Text>*/}
-            {/*</Card.Section>*/}
-
-            {/*/!* Content that is not inside Card.Section will have theme.spacing.xl spacing on all sides relative to Card *!/*/}
-            {/*<Text>Some other content</Text>*/}
-
-            {/*/!* right, left margins are negative – -1 * theme.spacing.xl *!/*/}
-            {/*<Card.Section>Middle section</Card.Section>*/}
-
-            {/*/!* bottom, right, left margins are negative – -1 * theme.spacing.xl *!/*/}
-            {/*<Card.Section>Last section</Card.Section>*/}
             <Grid>
                 <Grid.Col xs={4} sm={4}  style={{padding: '15px'}}>
                     <Center>
