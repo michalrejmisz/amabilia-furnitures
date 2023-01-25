@@ -29,7 +29,8 @@ const useStyles = createStyles((theme) => ({
 
         [theme.fn.smallerThan('md')]: {
             maxWidth: '100%',
-            marginRight: 0,
+            // marginRight: 0,
+            marginLeft: 0,
         },
     },
 

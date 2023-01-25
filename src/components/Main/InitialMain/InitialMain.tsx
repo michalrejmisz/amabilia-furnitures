@@ -3,6 +3,7 @@ import {useViewportSize} from "@mantine/hooks";
 import BackGroundWithShapes from "./BackGroundWithShapes";
 import {HeroBullets} from "./HeroBullets";
 import BottomContactArea from "./BottomContactArea";
+import {ContactUsForm} from "../ContactForm/ContactUsForm";
 
 interface ViewPortSize {
     viewPortHeight: number,

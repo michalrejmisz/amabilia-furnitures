@@ -4,7 +4,11 @@ const useStyles = createStyles((theme) => ({
     footer: {
         // backgroundColor: theme.colors[theme.primaryColor][9],
         backgroundColor: theme.colors.gray[7],
-        minHeight: "30vh",
+        minHeight: "10vh",
+
+        [theme.fn.smallerThan('sm')]: {
+            // minHeight: '20vh',
+        }
     }
 }));
 

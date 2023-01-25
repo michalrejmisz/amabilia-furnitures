@@ -1,4 +1,4 @@
-import {createStyles, Text, Card, RingProgress, Group, Grid, SimpleGrid, Image, Title, Container, useMantineTheme} from '@mantine/core';
+import {createStyles, Text, Card, RingProgress, Group, Grid, SimpleGrid, Image, Title, Container, Center, useMantineTheme} from '@mantine/core';
 
 export const PhoneCallMakeIcon = () => {
     return(
@@ -62,11 +62,36 @@ const useStyles = createStyles((theme) => ({
             // linearGradient: "90deg, ${theme.colors[theme.primaryColor][4]}, ${theme.colors[theme.primaryColor][8]}",
             // linearGradient: "90deg, red, blue",
             stroke: theme.colors[theme.primaryColor][8],
+            [theme.fn.smallerThan('sm')]: {
+                display: 'none',
+                // padding: '25px',
+                // width: '10px',
+                // height: '10px',
+                // minWidth: '10px',
+                // minHeight: '10px',
+            }
         },
+
+
     },
+
+    // svg2: {
+    //     // linearGradient: "90deg, ${theme.colors[theme.primaryColor][4]}, ${theme.colors[theme.primaryColor][8]}",
+    //     // linearGradient: "90deg, red, blue",
+    //     stroke: theme.colors[theme.primaryColor][8],
+    //     [theme.fn.smallerThan('md')]: {
+    //         display: 'none',
+    //     }
+    // },
+
 
     gridClass: {
         gap: '30px',
+
+        [theme.fn.smallerThan('md')]: {
+            gap: '10px',
+            // padding: '5px',
+        }
     }
 
 }));
@@ -98,10 +123,12 @@ const CardExamples = ({svg, title, text} : CardProps) => {
             {/*/!* bottom, right, left margins are negative – -1 * theme.spacing.xl *!/*/}
             {/*<Card.Section>Last section</Card.Section>*/}
             <Grid>
-                <Grid.Col xs={4} style={{padding: '15px'}}>
-                    {svg}
+                <Grid.Col xs={4} sm={4}  style={{padding: '15px'}}>
+                    <Center>
+                        {svg}
+                    </Center>
                 </Grid.Col>
-                <Grid.Col xs={8}>
+                <Grid.Col xs={8} sm={8}>
                     <Container>
                         <Title order={5} color={theme.colors[theme.primaryColor][7]} mt={"md"}>{title}</Title>
                         <Title order={6} color={theme.colors[theme.primaryColor][5]} mt={"xs"}>{text}</Title>
@@ -118,7 +145,13 @@ const BottomContactArea = () => {
     return(
         <div className={classes.contactArea}>
 
-            <SimpleGrid className={classes.gridClass} cols={3}>
+            <SimpleGrid className={classes.gridClass}
+                        cols={3}
+                        breakpoints={[
+                            { minWidth: 1, cols: 1 },
+                            { minWidth: 501, cols: 3 },
+                        ]}
+            >
                 {data.map((item)=> <CardExamples {...item}/>)}
             </SimpleGrid>
 

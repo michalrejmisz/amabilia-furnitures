@@ -8,6 +8,7 @@ import Main from './components/pages/Main';
 import {CardsCarousel} from "./components/Main/ProductsOffer/CardCarousel";
 import {LeadGrid} from "./components/UI/LeadGrid";
 import Footer from "./components/Footer/Footer";
+import {MobileFooter} from "./components/Footer/MobileFooter"
 
 const links = [
     {"link": "/contact", "label": "Kontakt"},
@@ -51,6 +52,7 @@ function App() {
                     {/*<LeadGrid/>*/}
                 {/*</Container>*/}
                 <Footer/>
+                <MobileFooter/>
             </main>
         </div>
       </MantineProvider>

@@ -31,7 +31,12 @@ const data = [
 ];
 
 const useStyles = createStyles((theme) => ({
+    wrapper: {
+        minHeight: '100vh',
+        // minHeight: '100vh',
+        // minHeight: 'fill-available, -moz-available, -webkit-fill-available',
 
+    },
     card: {
         height: 400,
         display: 'flex',
@@ -49,6 +54,7 @@ const useStyles = createStyles((theme) => ({
 
     products: {
         marginTop: '100px',
+        height: '100%',
         padding: '10px',
     },
 
@@ -135,7 +141,8 @@ const ProductsOffer = () =>{
         </Carousel.Slide>
     ))
     return(
-        <Container size={"lg"} style={{height: '100vh'}}>
+        // <Container size={"lg"} style={{height: '100vh'}}>
+        <Container size={"lg"} className={classes.wrapper}>
             <div className={classes.products}>
                 <div className={classes.ourOfferHeader}>Nasza oferta</div>
                 <Grid>

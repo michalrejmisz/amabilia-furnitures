@@ -3,6 +3,7 @@ import {Center, Container, createStyles, Image, MantineProvider, Title} from '@m
 import { useViewportSize } from '@mantine/hooks';
 import ProductsOffer from "../Main/ProductsOffer/ProductsOffer";
 import InitialMain from "../Main/InitialMain/InitialMain";
+import {ContactUsForm} from "../Main/ContactForm/ContactUsForm";
 
 interface ViewPortSize {
     viewPortHeight: number,
@@ -24,6 +25,7 @@ const Main = () =>{
         <Fragment>
                 <InitialMain/>
                 <ProductsOffer/>
+                <ContactUsForm/>
         </Fragment>
     );
 }
