@@ -47,10 +47,15 @@ const useStyles = createStyles((theme) => ({
         backgroundSize: 'cover',
         backgroundPosition: 'center',
 
+        // '&:hover': {
+        //     backgroundColor: theme.colors.red[9],
+        //     filter: 'blur(2px)',
+        //     // filter: 'grayscale(50%);',
+        // },
+
         '&:hover': {
-            backgroundColor: theme.colors.red[9],
-            filter: 'blur(2px)',
-            // filter: 'grayscale(50%);',
+            boxShadow: `${theme.shadows.md} !important`,
+            transform: 'scale(1.05)',
         },
     },
 

@@ -1,4 +1,4 @@
-import {createStyles, Text, Card, RingProgress, Group, Grid, SimpleGrid, Image, Title, Container, Center, useMantineTheme} from '@mantine/core';
+import {createStyles, Text, Card, RingProgress, Group, Grid, SimpleGrid, Image, Title, Container, Center, Skeleton, useMantineTheme} from '@mantine/core';
 
 export const PhoneCallMakeIcon = () => {
     return(
@@ -49,9 +49,30 @@ const useStyles = createStyles((theme) => ({
     },
 
     card: {
+        margin: '0px',
+        padding: '0px',
         minHeight: '140px',
         border: `solid 2px ${theme.colors[theme.primaryColor][4]}`,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // Grid: {
+        //     display: 'flex',
+        // },
 
+        [theme.fn.smallerThan('md')]: {
+            minHeight: '0',
+            padding: '10px',
+        },
+
+        [theme.fn.smallerThan('sm')]: {
+            minHeight: '0',
+            padding: '10px',
+        },
+
+        [theme.fn.smallerThan('xs')]: {
+            minHeight: '0',
+            // padding: '10px',
+        },
 
         '&:hover': {
             boxShadow: `${theme.shadows.md} !important`,
@@ -63,7 +84,7 @@ const useStyles = createStyles((theme) => ({
             // linearGradient: "90deg, red, blue",
             stroke: theme.colors[theme.primaryColor][8],
             [theme.fn.smallerThan('sm')]: {
-                display: 'none',
+                // display: 'none',
                 // padding: '25px',
                 // width: '10px',
                 // height: '10px',
@@ -75,6 +96,46 @@ const useStyles = createStyles((theme) => ({
 
     },
 
+    // Grid: {
+    //
+    //     flexWrap: 'nowrap',
+    // },
+
+
+
+    gridBoth: {
+        margin: '0px',
+        padding: '0px',
+        flexWrap: 'nowrap',
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: '100%',
+        // float: 'left',
+    },
+
+    gridSvg: {
+        // flexWrap: 'nowrap',
+        // flexDirection: 'row',
+        margin: '0px',
+        padding: '0px',
+        // padding: '15px',
+        maxWidth: '50px',
+        maxHeight: '50px',
+        justifyContent: 'center',
+        alignItems: 'center',
+        float: 'left',
+        [theme.fn.smallerThan('sm')]: {
+            padding: 0,
+            maxWidth: 100,
+            maxHeight: 100,
+        }
+    },
+
+    gridTitle: {
+        padding: '0px',
+        float: 'right',
+    },
+
     gridClass: {
         gap: '30px',
 
@@ -82,6 +143,25 @@ const useStyles = createStyles((theme) => ({
             gap: '10px',
             // padding: '5px',
         }
+    },
+
+    svgPadding: {
+        padding: '20px',
+        [theme.fn.smallerThan('md')]: {
+            marginTop: '10px',
+            padding: '0px',
+            paddingRight: '80px',
+            paddingLeft: '80px',
+        },
+        [theme.fn.smallerThan('sm')]: {
+            marginTop: '10px',
+            padding: '0px',
+            paddingRight: '80px',
+            paddingLeft: '80px',
+        },
+        [theme.fn.smallerThan('xs')]: {
+            padding: '20px',
+        },
     }
 
 }));
@@ -97,18 +177,29 @@ const CardExamples = ({svg, title, text} : CardProps) => {
     const theme = useMantineTheme();
 
     return(
+        // <Card radius={"lg"} withBorder className={classes.card}>
+        //     <Grid className={classes.gridBoth}>
+        //         {svg}
+        //         {/*<Grid.Col xs={4} sm={5} md={4} className={classes.gridSvg} >*/}
+        //         {/*/!*<Grid.Col xs={4} sm={5} md={4} >*!/*/}
+        //         {/*/!*    <Center>*!/*/}
+        //         {/*        {svg}*/}
+        //         {/*    /!*</Center>*!/*/}
+        //         {/*</Grid.Col>*/}
+        //         <Grid.Col xs={8} sm={7} md={8} className={classes.gridTitle}>
+        //             {/*<Container style={{padding: '0px'}}>*/}
+        //                 <Title order={5} color={theme.colors[theme.primaryColor][7]} mt={"md"}>{title}</Title>
+        //                 <Title order={6} color={theme.colors[theme.primaryColor][5]} mt={"xs"}>{text}</Title>
+        //             {/*</Container>*/}
+        //         </Grid.Col>
+        //     </Grid>
+        // </Card>
         <Card radius={"lg"} withBorder className={classes.card}>
             <Grid>
-                <Grid.Col xs={4} sm={4}  style={{padding: '15px'}}>
-                    <Center>
-                        {svg}
-                    </Center>
-                </Grid.Col>
-                <Grid.Col xs={8} sm={8}>
-                    <Container>
-                        <Title order={5} color={theme.colors[theme.primaryColor][7]} mt={"md"}>{title}</Title>
-                        <Title order={6} color={theme.colors[theme.primaryColor][5]} mt={"xs"}>{text}</Title>
-                    </Container>
+                <Grid.Col span={4} xs={12} sm={12} md={4} lg={4} xl={4} className={classes.svgPadding}>{svg}</Grid.Col>
+                <Grid.Col span={8} xs={12} sm={12} md={8} lg={8} xl={8}>
+                    <Title order={5} color={theme.colors[theme.primaryColor][7]} mt={"md"}>{title}</Title>
+                    <Title order={6} color={theme.colors[theme.primaryColor][5]} mt={"xs"}>{text}</Title>
                 </Grid.Col>
             </Grid>
         </Card>

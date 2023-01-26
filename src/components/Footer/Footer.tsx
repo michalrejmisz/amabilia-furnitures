@@ -3,7 +3,7 @@ import {Container, createStyles} from "@mantine/core";
 const useStyles = createStyles((theme) => ({
     footer: {
         // backgroundColor: theme.colors[theme.primaryColor][9],
-        backgroundColor: theme.colors.gray[7],
+        backgroundColor: theme.colors.gray[8],
         minHeight: "10vh",
 
         [theme.fn.smallerThan('sm')]: {
