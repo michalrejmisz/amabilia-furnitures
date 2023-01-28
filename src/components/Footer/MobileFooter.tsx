@@ -31,6 +31,13 @@ const useStyles = createStyles((theme) => ({
         margin: 0,
     },
 
+    link: {
+        display: "flex",
+        textDecoration: "none",
+        flexDirection: 'column',
+        width: '100%',
+    },
+
     icon: {
         display: 'flex',
         flexDirection: 'column',
@@ -53,7 +60,8 @@ const useStyles = createStyles((theme) => ({
 
     svg: {
         strokeWidth: "1",
-    }
+    },
+
 
 }));
 
@@ -78,7 +86,7 @@ const FooterIcons = ({ icon: Icon, title, link} : ContactIconProps) => {
     const { classes } = useStyles();
     return (
         <Fragment>
-            <Link to={link}>
+            <Link to={link} className={classes.link}>
                 <ThemeIcon className={classes.icon}>
                         <Icon size={35} className={classes.svg}/>
                         {title}
