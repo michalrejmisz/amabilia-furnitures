@@ -1,5 +1,5 @@
 import {Wrapper} from "@storybook/addon-docs";
-import {Button, createStyles, Paper, Text, Title, Center, Grid, Container} from "@mantine/core";
+import {Button, createStyles, Paper, Text, Title, Center, Grid, Container, Transition } from "@mantine/core";
 import {Comment} from "postcss";
 import {Carousel} from "@mantine/carousel";
 import {CardsCarousel} from "./CardCarousel";
@@ -35,10 +35,8 @@ const useStyles = createStyles((theme) => ({
     wrapper: {
         minHeight: '100vh',
         paddingBottom: '50px',
-        // minHeight: '100vh',
-        // minHeight: 'fill-available, -moz-available, -webkit-fill-available',
-
     },
+
     card: {
         height: 400,
         display: 'flex',
@@ -54,8 +52,15 @@ const useStyles = createStyles((theme) => ({
         // },
 
         '&:hover': {
-            boxShadow: `${theme.shadows.md} !important`,
+            boxShadow: `${theme.shadows.xl} !important`,
             transform: 'scale(1.05)',
+
+
+            iconBox: {
+                // marginTop: 'auto',
+                // backgroundColor: "red",
+                backgroundColor: 'red',
+            },
         },
     },
 

@@ -19,6 +19,11 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
             width: "auto",
             zIndex: -1000,
             background: 'transparent',
+
+            [theme.fn.smallerThan('xs')]: {
+                height: '1200px',
+            },
+
         },
 
 
@@ -38,7 +43,13 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
             //     height: 'stretch',
             // },
 
-            svg: {
+            [theme.fn.smallerThan('xs')]: {
+                height: '1200px',
+            },
+
+
+
+            Svg: {
                 position: "absolute",
                 display: "block",
                 width: "calc(161% + 1.3px)",
@@ -49,6 +60,7 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
                 overflow: "hidden",
             },
         },
+
 
         shapeFill: {
             fill: theme.colors[theme.primaryColor][4],
@@ -78,12 +90,15 @@ const BackGroundWithShapes:FC<PropsWithChildren<Props>> = ({children}) => {
         <div className={classes.firstFrame}>
             <div className={classes.customShape}>
                 <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
-                     preserveAspectRatio="none">
+                     preserveAspectRatio="none" >
                     <path
                         d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
                         className={classes.shapeFill}>
                     </path>
                 </svg>
+            </div>
+            <div className={classes.childrenContent}>
+                {children}
             </div>
 
 
@@ -100,9 +115,9 @@ const BackGroundWithShapes:FC<PropsWithChildren<Props>> = ({children}) => {
 
 
                 {/*</div>*/}
-                <div className={classes.childrenContent}>
-                    {children}
-                </div>
+                {/*<div className={classes.childrenContent}>*/}
+                {/*    {children}*/}
+                {/*</div>*/}
         </div>
     )
 }

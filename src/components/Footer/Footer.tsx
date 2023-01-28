@@ -3,8 +3,8 @@ import {Container, createStyles} from "@mantine/core";
 const useStyles = createStyles((theme) => ({
     footer: {
         // backgroundColor: theme.colors[theme.primaryColor][9],
-        backgroundColor: theme.colors.gray[8],
-        minHeight: "10vh",
+        backgroundColor: theme.colors[theme.primaryColor][3],
+        padding: '10px',
 
         [theme.fn.smallerThan('sm')]: {
             // minHeight: '20vh',
@@ -19,7 +19,7 @@ const Footer = () => {
     return(
         <footer className={classes.footer}>
             <Container>
-                Amabilia Kontakt
+               Copyright © Amabilia 2023
             </Container>
         </footer>
     )

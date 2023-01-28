@@ -1,6 +1,7 @@
 import {createStyles, ThemeIcon, SimpleGrid} from '@mantine/core'
 import {IconPhone, IconShoppingCart, IconMail, IconBuildingStore} from '@tabler/icons';
 import {Fragment} from 'react';
+import {Link} from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
     mobileFooter: {
@@ -57,29 +58,32 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const MOCKDATA = [
-    { title: 'Zadzwoń', icon: IconPhone },
+    { title: 'Zadzwoń', icon: IconPhone, link: '/' },
     // { title: 'Telefon', icon: IconMail },
-    { title: 'Sklep', icon: IconBuildingStore },
-    { title: 'Koszyk', icon: IconShoppingCart },
+    { title: 'Sklep', icon: IconBuildingStore, link: '/products' },
+    { title: 'Koszyk', icon: IconShoppingCart, link: '/'},
 ];
 
 interface ContactIconProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
     icon: React.FC<any>;
     title: React.ReactNode;
+    link: string;
 }
 
 interface ContactIconsListProps {
     data?: ContactIconProps[];
 }
 
-const FooterIcons = ({ icon: Icon, title} : ContactIconProps) => {
+const FooterIcons = ({ icon: Icon, title, link} : ContactIconProps) => {
     const { classes } = useStyles();
     return (
         <Fragment>
-            <ThemeIcon className={classes.icon}>
-                <Icon size={35} className={classes.svg}/>
-                {title}
-            </ThemeIcon>
+            <Link to={link}>
+                <ThemeIcon className={classes.icon}>
+                        <Icon size={35} className={classes.svg}/>
+                        {title}
+                </ThemeIcon>
+            </Link>
         </Fragment>
     );
 }
@@ -92,7 +96,7 @@ export const MobileFooter = ({ data = MOCKDATA }: ContactIconsListProps) => {
 
         <div className={classes.mobileFooter}>
             <SimpleGrid cols={4} className={classes.grid}>
-                    {items}
+                {items}
             </SimpleGrid>
         </div>
     )

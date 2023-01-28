@@ -1,9 +1,9 @@
 import {Fragment} from 'react'
 import {Center, Container, createStyles, Image, MantineProvider, Title} from '@mantine/core'
 import { useViewportSize } from '@mantine/hooks';
-import ProductsOffer from "../Main/ProductsOffer/ProductsOffer";
-import InitialMain from "../Main/InitialMain/InitialMain";
-import {ContactUsForm} from "../Main/ContactForm/ContactUsForm";
+import ProductsOffer from "../components/Main/ProductsOffer/ProductsOffer";
+import InitialMain from "../components/Main/InitialMain/InitialMain";
+import {ContactUsForm} from "../components/Main/ContactForm/ContactUsForm";
 
 interface ViewPortSize {
     viewPortHeight: number,
@@ -17,7 +17,7 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
 
 
 
-const Main = () =>{
+const Home = () =>{
     const { height: viewPortHeight, width: viewPortWidth } = useViewportSize();
     const { classes } = useStyles({ viewPortHeight, viewPortWidth });
 
@@ -30,4 +30,4 @@ const Main = () =>{
     );
 }
 
-export default Main;
+export default Home;

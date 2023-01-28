@@ -1,9 +1,12 @@
 import { createStyles, Header, Menu, Group, Center, Burger, Container, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons';
-import { useState } from 'react'
-import { MantineLogo } from '@mantine/ds';
 import Logo from './Logo';
+import {
+    NavLink,
+    Link,
+    useLocation
+} from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
     header: {
@@ -63,6 +66,11 @@ const useStyles = createStyles((theme) => ({
         '&:hover': {
             backgroundColor: theme.colors[theme.primaryColor][8],
         },
+
+    },
+
+    active: {
+        backgroundColor: theme.colors[theme.primaryColor][8],
     },
 
     linkLabel: {
@@ -82,6 +90,13 @@ interface HeaderTransparentProp {
 export function HeaderMenuColored({ links, transparent }: HeaderSearchProps ) {
     const [opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
+    const location = useLocation();
+
+    if(location.pathname === '/products'){
+        transparent = false;
+    }
+
+
 
     const items = links.map((link) => {
         const menuItems = link.links?.map((item) => (
@@ -109,14 +124,16 @@ export function HeaderMenuColored({ links, transparent }: HeaderSearchProps ) {
         }
 
         return (
-            <a
-                key={link.label}
-                href={link.link}
-                className={classes.link}
-                onClick={(event) => event.preventDefault()}
-            >
-                {link.label}
-            </a>
+                <NavLink to={link.link} className={({isActive}) => (isActive ? `${classes.link} ${classes.active}` : `${classes.link}`)}>
+                    {/*<a*/}
+                    {/*    key={link.label}*/}
+                    {/*    href={link.link}*/}
+                    {/*    className={classes.link}*/}
+                    {/*    // onClick={(event) => event.preventDefault()}*/}
+                    {/*>*/}
+                        {link.label}
+                    {/*</a>*/}
+                </NavLink>
         );
     });
 

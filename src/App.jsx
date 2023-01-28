@@ -1,22 +1,21 @@
 import {useState, useEffect} from 'react';
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {MantineProvider, Container} from "@mantine/core";
 import {HeaderMenuColored} from "./components/Header/HeaderMenuColored";
-import Main from './components/pages/Main';
-import {CardsCarousel} from "./components/Main/ProductsOffer/CardCarousel";
-import {LeadGrid} from "./components/UI/LeadGrid";
+import Home from './pages/Home';
+import Products from './pages/Products';
 import Footer from "./components/Footer/Footer";
-import {MobileFooter} from "./components/Footer/MobileFooter"
+import {MobileFooter} from "./components/Footer/MobileFooter";
+import {Routes, Route} from "react-router-dom";
 
 const links = [
-    {"link": "/contact", "label": "Kontakt"},
+    {"link": "/", "label": "Home"},
     {"link": "/about", "label": "O nas"},
-    {"link": "/products", "label": "Produkty"},
     {"link": "/map", "label": "Dojazd"},
+    {"link": "/products", "label": "Produkty"},
 ];
-// {[{"link": "a", "label": "a"}, {"link": "b", "label": "b", "links" : [{"link": "second", "label": "second"}]}]}
+
 function App() {
     const [scrollTop, setScrollTop] = useState(true);
 
@@ -46,11 +45,10 @@ function App() {
         <div className="App">
             <main>
                 <HeaderMenuColored links={links} transparent={scrollTop}/>
-                <Main/>
-                {/*<Container my="md" color="lime-4">*/}
-                    {/*<CardsCarousel/>*/}
-                    {/*<LeadGrid/>*/}
-                {/*</Container>*/}
+                <Routes>
+                    <Route path="/" element={<Home />}></Route>
+                    <Route path="/products" element={<Products />}></Route>
+                </Routes>
                 <Footer/>
                 <MobileFooter/>
             </main>
