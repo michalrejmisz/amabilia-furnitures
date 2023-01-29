@@ -38,6 +38,9 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
             zIndex: -60,
             backgroundColor: theme.colors[theme.primaryColor][6],
             minHeight: '854px',
+            // background: `url("${process.env.PUBLIC_URL+"/images/bgtest2.jpg"}") no-repeat fixed center`,
+            // backgroundSize: 'cover',
+            // filter: "linear-gradient(90deg, rgba(2,0,36,0.9696079115239846) 0%, rgba(114,114,231,1) 64%, rgba(0,212,255,1) 100%)",
 
             // [theme.fn.smallerThan('md')]: {
             //     height: 'stretch',
@@ -46,8 +49,6 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
             [theme.fn.smallerThan('xs')]: {
                 height: '1200px',
             },
-
-
 
         },
 

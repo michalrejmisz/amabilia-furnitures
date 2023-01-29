@@ -16,7 +16,6 @@ const useStyles = createStyles((theme) => ({
         paddingTop: '5px',
 
         [theme.fn.smallerThan('sm')]: {
-
             display: 'block',
             height: '60px',
             width: '100%',
