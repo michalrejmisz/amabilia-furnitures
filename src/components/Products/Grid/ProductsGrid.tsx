@@ -6,7 +6,7 @@ import {
 
 const ProductsGrid = () => {
     return(
-        <Grid>
+        <Grid style={{marginBottom: "30px"}}>
             <Grid.Col span={12}><SearchBar/></Grid.Col>
             <Grid.Col span={12} xs={6} md={4} ><SingleProductCard/></Grid.Col>
             <Grid.Col span={12} xs={6} md={4} ><SingleProductCard/></Grid.Col>

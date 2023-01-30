@@ -1,4 +1,5 @@
 import {Container, createStyles} from "@mantine/core";
+import {ThemeColor} from "./ThemeColor";
 
 const useStyles = createStyles((theme) => ({
     footer: {
@@ -20,6 +21,7 @@ const Footer = () => {
         <footer className={classes.footer}>
             <Container>
                Copyright © Amabilia 2023
+                {/*<ThemeColor />*/}
             </Container>
         </footer>
     )

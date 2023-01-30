@@ -23,8 +23,8 @@ export const OrderByField = () => {
                     data={[
                         { value: 'price_asc', label: 'Cena rosnąco' },
                         { value: 'price_desc', label: 'Cena malejąco' },
-                        { value: 'name_asc', label: 'Nazwa A-Z' },
-                        { value: 'name_desc', label: 'Nazwa Z-A' },
+                        { value: 'name_asc', label: 'Nazwa, A do Z' },
+                        { value: 'name_desc', label: 'Nazwa, Z do A' },
                     ]}
                 />
             </Center>

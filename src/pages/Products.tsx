@@ -3,6 +3,7 @@ import {Center, Container, createStyles, Image, MantineProvider, Title, Grid} fr
 import { useViewportSize } from '@mantine/hooks';
 import ProductsNavbar from "../components/Products/Navbar/ProductsNavbar";
 import ProductsGrid from "../components/Products/Grid/ProductsGrid";
+import {InformationBanner} from "../components/Products/InformationBanner/InformationBanner";
 
 interface ViewPortSize {
     viewPortHeight: number,
@@ -24,6 +25,7 @@ const Products = () =>{
     return(
         <Fragment>
             <Container size={'lg'} className={classes.wrapper}>
+                <InformationBanner/>
                 <Grid mt={'20px'}>
                     <Grid.Col span={12} xs={3} sm={3}>
                         <ProductsNavbar/>

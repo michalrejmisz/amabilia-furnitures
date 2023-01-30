@@ -18,6 +18,11 @@ const links = [
 
 function App() {
     const [scrollTop, setScrollTop] = useState(true);
+    const [layoutColor, setLayoutColor] = useState('blue')
+
+    const primaryColor = (color) => {
+        setLayoutColor(color);
+    }
 
     useEffect(() => {
         const handleScroll = (event) => {
@@ -49,7 +54,7 @@ function App() {
                     <Route path="/" element={<Home />}></Route>
                     <Route path="/products" element={<Products />}></Route>
                 </Routes>
-                <Footer/>
+                <Footer primaryColor={primaryColor}/>
                 <MobileFooter/>
             </main>
         </div>

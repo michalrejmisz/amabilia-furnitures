@@ -9,9 +9,9 @@ import {
 
 const useStyles = createStyles((theme) => ({
     card: {
-        maxWidth: '230px',
+        // maxWidth: '230px',
         textAlign: 'left',
-        marginLeft: '10px',
+        // marginLeft: '10px',
         borderRadius: "0",
         lineHeight: "24px",
         fontSize: "14px",
@@ -91,7 +91,6 @@ const ProductsNavbar = () => {
         <Fragment>
             <CategoryFrame name={'Kategoria'} items={CATEGORIES}/>
             <CategoryFrame name={'Marki'} items={BRANDS}/>
-            <CategoryFrame name={'Kategoria'} items={CATEGORIES}/>
         </Fragment>
     );
 }
