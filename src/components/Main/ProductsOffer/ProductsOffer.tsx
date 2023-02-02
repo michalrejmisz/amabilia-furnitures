@@ -1,31 +1,31 @@
 import {Wrapper} from "@storybook/addon-docs";
 import {Button, createStyles, Paper, Text, Title, Center, Grid, Container, Transition } from "@mantine/core";
-import {Comment} from "postcss";
+// import {Comment} from "postcss";
 import {Carousel} from "@mantine/carousel";
 import {CardsCarousel} from "./CardCarousel";
 
 const data = [
     {
         image:
-            `${process.env.PUBLIC_URL}/images/products_1.png`,
+            `/static/images/products_1.png`,
         title: 'Krzesła',
         category: 'Krzesła',
     },
     {
         image:
-            `${process.env.PUBLIC_URL}/images/products_2.png`,
+            `/static/images/products_2.png`,
         title: 'Biurka',
         category: 'Biurka',
     },
     {
         image:
-            `${process.env.PUBLIC_URL}/images/products_1.png`,
+            `/static/images/products_1.png`,
         title: 'Szafy',
         category: 'Krzesła',
     },
     {
         image:
-            `${process.env.PUBLIC_URL}/images/products_1.png`,
+            `/static/images/products_1.png`,
         title: 'Inne',
         category: 'Inne',
     },

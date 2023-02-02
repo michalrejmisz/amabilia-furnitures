@@ -80,7 +80,7 @@ export function HeroBullets() {
         <Fragment>
             <Container size={"lg"}>
                 <div className={classes.inner}>
-                    <Image src={process.env.PUBLIC_URL + "/images/desk_main.png"} className={classes.image} />
+                    <Image src="/static/images/desk_main.png" className={classes.image} />
                     <div className={classes.content}>
                         <Title className={classes.title}>
                             <span className={classes.highlight}>Amabilia</span> Nieźle <br /> Cię urządzimy
@@ -110,21 +110,6 @@ export function HeroBullets() {
                                 <span className={classes.highlight}><b style={{color: "white"}}>Darmowa dostawa</b></span> – w zależności od wielkości zamówienia oraz odległości od klienta możliwa jest darmowa dostawa,<br /> zadzwoń a napewno się dogadamy!
                             </List.Item>
                         </List>
-
-                        {/*<Group mt={30}>*/}
-                        {/*    <Grid>*/}
-                        {/*        /!*<Grid.Col xs={6}>*!/*/}
-                        {/*        /!*    <Button radius="md" size="xl" className={classes.control} >*!/*/}
-                        {/*        /!*        Kliknij i zadzwoń! <br /> 777 888 999*!/*/}
-                        {/*        /!*    </Button>*!/*/}
-                        {/*        /!*</Grid.Col>*!/*/}
-                        {/*        <Grid.Col xs={6}>*/}
-                        {/*            <Button variant="default" radius="md" size="xl" className={classes.control}>*/}
-                        {/*                Przejdź do sklepu!*/}
-                        {/*            </Button>*/}
-                        {/*        </Grid.Col>*/}
-                        {/*    </Grid>*/}
-                        {/*</Group>*/}
                     </div>
                 </div>
                 <BottomContactArea/>

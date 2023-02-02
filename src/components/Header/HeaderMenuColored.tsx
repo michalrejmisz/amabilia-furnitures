@@ -2,11 +2,9 @@ import { createStyles, Header, Menu, Group, Center, Burger, Container, Title } f
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons';
 import Logo from './Logo';
-import {
-    NavLink,
-    Link,
-    useLocation
-} from 'react-router-dom';
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+
 
 const useStyles = createStyles((theme) => ({
     header: {
@@ -87,12 +85,13 @@ interface HeaderTransparentProp {
     transparent: boolean;
 }
 
+
 export function HeaderMenuColored({ links, transparent }: HeaderSearchProps ) {
     const [opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
-    const location = useLocation();
+    const {pathname} = useRouter();
 
-    if(location.pathname === '/products'){
+    if(pathname === '/Products'){
         transparent = false;
     }
 
@@ -124,16 +123,26 @@ export function HeaderMenuColored({ links, transparent }: HeaderSearchProps ) {
         }
 
         return (
-                <NavLink to={link.link} className={({isActive}) => (isActive ? `${classes.link} ${classes.active}` : `${classes.link}`)}>
-                    {/*<a*/}
-                    {/*    key={link.label}*/}
+                // <Link href={link.link} className={classes.link}>
+                //     {/*<a*/}
+                //     {/*    key={link.label}*/}
+                //     {/*    href={link.link}*/}
+                //     {/*    className={classes.link}*/}
+                //     {/*    // onClick={(event) => event.preventDefault()}*/}
+                //     {/*>*/}
+                //         {link.label}
+                //     {/*</a>*/}
+                // </Link>
+                <Link href={link.link}>
+                    <a className={classes.link}>{link.label}</a>
+                        {/*key={link.label}*/}
                     {/*    href={link.link}*/}
                     {/*    className={classes.link}*/}
                     {/*    // onClick={(event) => event.preventDefault()}*/}
                     {/*>*/}
-                        {link.label}
+
                     {/*</a>*/}
-                </NavLink>
+                </Link>
         );
     });
 

@@ -1,7 +1,7 @@
 import {createStyles, ThemeIcon, SimpleGrid} from '@mantine/core'
 import {IconPhone, IconShoppingCart, IconMail, IconBuildingStore} from '@tabler/icons';
 import {Fragment} from 'react';
-import {Link} from 'react-router-dom';
+import Link from 'next/link'
 
 const useStyles = createStyles((theme) => ({
     mobileFooter: {
@@ -67,7 +67,7 @@ const useStyles = createStyles((theme) => ({
 const MOCKDATA = [
     { title: 'Zadzwoń', icon: IconPhone, link: '/' },
     // { title: 'Telefon', icon: IconMail },
-    { title: 'Sklep', icon: IconBuildingStore, link: '/products' },
+    { title: 'Sklep', icon: IconBuildingStore, link: '/Products' },
     { title: 'Koszyk', icon: IconShoppingCart, link: '/'},
 ];
 
@@ -85,11 +85,13 @@ const FooterIcons = ({ icon: Icon, title, link} : ContactIconProps) => {
     const { classes } = useStyles();
     return (
         <Fragment>
-            <Link to={link} className={classes.link}>
-                <ThemeIcon className={classes.icon}>
-                        <Icon size={35} className={classes.svg}/>
-                        {title}
-                </ThemeIcon>
+            <Link href={link} >
+                <a className={classes.link}>
+                    <ThemeIcon className={classes.icon}>
+                            <Icon size={35} className={classes.svg}/>
+                            {title}
+                    </ThemeIcon>
+                </a>
             </Link>
         </Fragment>
     );

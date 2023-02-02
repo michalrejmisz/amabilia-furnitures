@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
@@ -26,12 +25,10 @@
     "dayjs": "^1.11.3",
     "embla-carousel-autoplay": "^7.0.5",
     "embla-carousel-react": "^7.0.3",
-    "next": "12.1.5",
+    "next": "^12.1.5",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.7.0",
-    "react-scripts": "^5.0.1",
     "storybook-dark-mode": "^1.1.0",
     "stylis": "^4.1.1",
     "stylis-plugin-rtl": "^2.1.1"

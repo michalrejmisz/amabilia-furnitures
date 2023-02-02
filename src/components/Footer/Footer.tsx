@@ -6,6 +6,7 @@ const useStyles = createStyles((theme) => ({
         // backgroundColor: theme.colors[theme.primaryColor][9],
         backgroundColor: theme.colors[theme.primaryColor][3],
         padding: '10px',
+        textAlign: 'center',
 
         [theme.fn.smallerThan('sm')]: {
             // minHeight: '20vh',
@@ -21,7 +22,6 @@ const Footer = () => {
         <footer className={classes.footer}>
             <Container>
                Copyright © Amabilia 2023
-                {/*<ThemeColor />*/}
             </Container>
         </footer>
     )

@@ -4,6 +4,8 @@ import { useViewportSize } from '@mantine/hooks';
 import ProductsOffer from "../components/Main/ProductsOffer/ProductsOffer";
 import InitialMain from "../components/Main/InitialMain/InitialMain";
 import {ContactUsForm} from "../components/Main/ContactForm/ContactUsForm";
+import {Layout} from "../components/Layout/Layout";
+import type { NextPageWithLayout } from './_app'
 
 interface ViewPortSize {
     viewPortHeight: number,
@@ -17,7 +19,7 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
 
 
 
-const Home = () =>{
+const Home: NextPageWithLayout = () => {
     const { height: viewPortHeight, width: viewPortWidth } = useViewportSize();
     const { classes } = useStyles({ viewPortHeight, viewPortWidth });
 
@@ -29,5 +31,14 @@ const Home = () =>{
         </Fragment>
     );
 }
-
 export default Home;
+
+Home.getLayout = function getLayout(page: React.ReactElement){
+    return(
+        <Layout>
+            {page}
+        </Layout>
+    );
+}
+
+

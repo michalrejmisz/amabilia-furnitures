@@ -45,28 +45,22 @@ const useStyles = createStyles((theme) => ({
 
 const data = [
     {
-        image:
-            process.env.PUBLIC_URL + "/images/brands/rolex.png",
+        image: "/static/images/brands/rolex.png",
     },
     {
-        image:
-            process.env.PUBLIC_URL + "/images/brands/rbk.png",
+        image: "/static/images/brands/rbk.png",
     },
     {
-        image:
-            process.env.PUBLIC_URL + "/images/brands/nike.png",
+        image: "/static/images/brands/nike.png",
     },
     {
-        image:
-            process.env.PUBLIC_URL + "/images/brands/ferrari.png",
+        image: "/static/images/brands/ferrari.png",
     },
     {
-        image:
-            process.env.PUBLIC_URL + "/images/brands/shell.png"
+        image: "/static/images/brands/shell.png"
     },
     {
-        image:
-            process.env.PUBLIC_URL + "/images/brands/windows.png"
+        image: "/static/images/brands/windows.png"
     },
 ];
 
