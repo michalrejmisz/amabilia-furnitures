@@ -12,7 +12,7 @@ const links = [
     {"link": "/", "label": "Home"},
     {"link": "/about", "label": "O nas"},
     {"link": "/map", "label": "Dojazd"},
-    {"link": "/Products", "label": "Produkty"},
+    {"link": "/products", "label": "Produkty"},
 ];
 
 type Props = {

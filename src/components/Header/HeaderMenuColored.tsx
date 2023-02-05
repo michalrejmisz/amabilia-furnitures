@@ -91,7 +91,7 @@ export function HeaderMenuColored({ links, transparent }: HeaderSearchProps ) {
     const { classes } = useStyles();
     const {pathname} = useRouter();
 
-    if(pathname === '/Products'){
+    if(pathname.indexOf('/products/') === 0 || pathname.indexOf('/products') === 0){
         transparent = false;
     }
 

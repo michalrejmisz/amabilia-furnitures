@@ -4,7 +4,7 @@ import './App.css';
 import {MantineProvider, Container} from "@mantine/core";
 import {HeaderMenuColored} from "./components/Header/HeaderMenuColored";
 import Home from './pages/Home';
-import Products from './pages/Products';
+import Products from './pages/products';
 import Footer from "./components/Footer/Footer";
 import {MobileFooter} from "./components/Footer/MobileFooter";
 import {Routes, Route} from "react-router-dom";

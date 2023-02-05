@@ -92,7 +92,7 @@ export function CardsCarousel() {
     const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
     const slides = data.map((item) => (
         <Carousel.Slide>
-            <Card {...item}/>
+            <Card key={item.image} {...item}/>
         </Carousel.Slide>
     ));
 

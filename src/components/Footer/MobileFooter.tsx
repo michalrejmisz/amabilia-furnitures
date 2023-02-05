@@ -67,7 +67,7 @@ const useStyles = createStyles((theme) => ({
 const MOCKDATA = [
     { title: 'Zadzwoń', icon: IconPhone, link: '/' },
     // { title: 'Telefon', icon: IconMail },
-    { title: 'Sklep', icon: IconBuildingStore, link: '/Products' },
+    { title: 'Sklep', icon: IconBuildingStore, link: '/products' },
     { title: 'Koszyk', icon: IconShoppingCart, link: '/'},
 ];
 

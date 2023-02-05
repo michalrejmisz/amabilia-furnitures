@@ -6,6 +6,8 @@ import {
     Group,
     createStyles
 } from '@mantine/core'
+import Link from 'next/link';
+import {ICategory} from "../../../interfaces/Categories";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -78,19 +80,20 @@ const CategoryFrame = ({name, items} : CategoryFrameProps) => {
             <Card.Section className={classes.cardHeader}>{name}</Card.Section>
             <ul className={classes.categoryList}>
                 {items.map((category) => (
-                    <li className={classes.categoryListItem}>{category}</li>
-                ))}
+                    <Link href={`/products/${category.slug}`}><li className={classes.categoryListItem}>{category.name}</li></Link>
+                ))};
             </ul>
         </Card>
     )
 }
 
 
-const ProductsNavbar = () => {
+const ProductsNavbar = ({categories} : ICategory[] ) => {
+    const categoriesNames = categories.map((category: ICategory) => category.name)
     return(
         <Fragment>
-            <CategoryFrame name={'Kategoria'} items={CATEGORIES}/>
-            <CategoryFrame name={'Marki'} items={BRANDS}/>
+            <CategoryFrame name={'Kategoria'} items={categories}/>
+            {/*<CategoryFrame name={'Marki'} items={BRANDS}/>*/}
         </Fragment>
     );
 }

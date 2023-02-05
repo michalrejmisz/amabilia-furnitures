@@ -6,6 +6,8 @@ import InitialMain from "../components/Main/InitialMain/InitialMain";
 import {ContactUsForm} from "../components/Main/ContactForm/ContactUsForm";
 import {Layout} from "../components/Layout/Layout";
 import type { NextPageWithLayout } from './_app'
+// import { getCategories } from '../utils/wordpress';
+import { getCategories } from '../utils/apollo-client';
 
 interface ViewPortSize {
     viewPortHeight: number,
@@ -17,11 +19,19 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
 
 }));
 
-
+interface NavbarCategoryItem {
+    categories: string;
+}
 
 const Home: NextPageWithLayout = () => {
     const { height: viewPortHeight, width: viewPortWidth } = useViewportSize();
     const { classes } = useStyles({ viewPortHeight, viewPortWidth });
+
+    // const jsxCategories = categories.map((category) => {
+    //     return {category};
+    // })
+
+
 
     return(
         <Fragment>
@@ -30,7 +40,8 @@ const Home: NextPageWithLayout = () => {
                 <ContactUsForm/>
         </Fragment>
     );
-}
+};
+
 export default Home;
 
 Home.getLayout = function getLayout(page: React.ReactElement){
@@ -39,6 +50,23 @@ Home.getLayout = function getLayout(page: React.ReactElement){
             {page}
         </Layout>
     );
+}
+
+
+
+
+
+export async function getStaticProps() {
+    const categories = await getCategories();
+    console.log(categories)
+    console.log("test static props")
+
+    return {
+        props: {
+            categories,
+        },
+        revalidate: 10, // In seconds
+    };
 }
 
 
