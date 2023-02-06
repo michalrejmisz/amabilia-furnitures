@@ -11,6 +11,7 @@ import {
     IconShoppingCart,
     IconSearch,
 } from '@tabler/icons';
+import {IProduct} from "../../../interfaces/Products";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
 
@@ -92,13 +93,13 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
 }))
 
-export const SingleProductCard = () => {
+export const SingleProductCard: React.FC<{product : IProduct}> = ({product}) => {
     const { classes } = useStyles();
 
     return(
         <Card withBorder className={classes.card}>
             <Card.Section className={classes.imageSection}>
-                <Image src="https://i.imgur.com/ZL52Q2D.png" alt="Tesla Model S" />
+                <Image src={product.imagePrimary.mediaItemUrl} alt="Tesla Model S" />
             </Card.Section>
 
 
@@ -114,12 +115,13 @@ export const SingleProductCard = () => {
 
             <Group position="apart">
                 <div>
-                    <Text weight={500}>Krzesło obrotowe z aluminiowymu kółkami</Text>
+                    <Text weight={500}>{product.title}</Text>
+                    {/*<Text weight={500}>Krzesło obrotowe z aluminiowymu kółkami</Text>*/}
                     {/*<Text size="xs" color="dimmed">*/}
                     {/*    Free recharge at any station*/}
                     {/*</Text>*/}
                 </div>
-                <Badge variant="outline">150zł</Badge>
+                <Badge variant="outline">{product.price}</Badge>
             </Group>
 
 

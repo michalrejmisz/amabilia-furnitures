@@ -84,6 +84,7 @@ export const getProducts = async() => {
     const edges = products.data.produkty.edges;
     let productsArray = [];
     edges.map((product) => {
+        console.log(product.node.images)
         productsArray = [...productsArray, {
             id: product.node.id,
             slug: product.node.slug,

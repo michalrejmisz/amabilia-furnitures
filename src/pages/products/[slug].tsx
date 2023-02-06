@@ -9,6 +9,7 @@ import type { NextPageWithLayout } from '../_app'
 // import Home from "./Home";
 import {getCategories, getCategoryBySlug, getProducts, getProductsByCategory} from "../../utils/apollo-client";
 import {ICategory} from "../../interfaces/Categories";
+import {IProduct} from "../../interfaces/Products";
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -29,10 +30,10 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
 }));
 
 
-const Products: NextPageWithLayout<{ categories : ICategory[]}> = ({categories}) =>{
+const Products: NextPageWithLayout<{ categories : ICategory[], products : IProduct[]}> = ({categories, products}) =>{
     const { height: viewPortHeight, width: viewPortWidth } = useViewportSize();
     const { classes } = useStyles({ viewPortHeight, viewPortWidth });
-
+    console.log("PRODUCTS IN PRODUCTS"+products)
     return(
         <Fragment>
                 <Container size={'lg'} className={classes.wrapper}>
@@ -42,7 +43,7 @@ const Products: NextPageWithLayout<{ categories : ICategory[]}> = ({categories})
                             <ProductsNavbar categories={categories}/>
                         </Grid.Col>
                         <Grid.Col span={12} xs={9} sm={9}>
-                            <ProductsGrid/>
+                            <ProductsGrid products={products}/>
                         </Grid.Col>
                     </Grid>
                 </Container>
@@ -73,7 +74,7 @@ export const getStaticProps: GetStaticProps = async(context) => {
         props: {
             slug,
             categories,
-            productsByCategory,
+            products: productsByCategory,
         },
         revalidate: 10, // In seconds
     };

@@ -81,7 +81,7 @@ const CategoryFrame = ({name, items} : CategoryFrameProps) => {
             <ul className={classes.categoryList}>
                 {items.map((category) => (
                     <Link href={`/products/${category.slug}`}><li className={classes.categoryListItem}>{category.name}</li></Link>
-                ))};
+                ))}
             </ul>
         </Card>
     )
