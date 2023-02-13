@@ -1,6 +1,8 @@
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import '../styles/global.css';
+import {client} from "../App";
+import {ApolloProvider} from "@apollo/client";
 
 
 export type NextPageWithLayout = NextPage & {

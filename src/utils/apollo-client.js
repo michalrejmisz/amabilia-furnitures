@@ -1,11 +1,61 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
 
-const client = new ApolloClient({
-    uri: "http://admin.srv53226.seohost.com.pl/graphql",
+export const client = new ApolloClient({
+    uri: "http://www.srv53487.seohost.com.pl/admin/graphql",
     cache: new InMemoryCache(),
 });
+
+
+// export const GET_PRODUCTS = gql`
+//     query GetProducts {
+//         produkty {
+//             edges {
+//                 node{
+//                     id
+//                     description
+//                     slug
+//                     title
+//                 }
+//             }
+//         }
+//     }
+// `;
+// // $slug: String!
+// export const GET_PRODUCT = gql`
+//     query GetProduct($id: ID!) {
+//         produkt(id: "xd") {
+//             id
+//             description
+//             slug
+//             title
+//         }
+//      }
+// `;
+//
+// export const getProductsNew = async() => {
+//     const data = await client.query({query: GET_PRODUCTS});
+//     console.log("------------")
+//     console.log(data)
+//     console.log("------------")
+//     return data;
+// }
+//
+// export const getProductBySlug = async(slug) => {
+//     console.log("INSIDE GET PRODUCT BY SLUG")
+//     console.log(slug)
+//     console.log("INSIDE GET PRODUCT BY SLUG")
+//     // const product = await client.query({
+//     //     query: GET_PRODUCT,
+//     //     variables: {slug: slug},
+//     // })
+//     // console.log("-------BYSLUG?-----")
+//     // console.log(product)
+//     // console.log("------------")
+//     // return product;
+// }
+
 
 export const getCategoriesQuery = async() => {
     const categories = await client.query({
@@ -84,6 +134,12 @@ export const getProducts = async() => {
     const edges = products.data.produkty.edges;
     let productsArray = [];
     edges.map((product) => {
+        // if(product.node.image[0] != null){
+        //     const images = product.node.images[0]?.map((image) => {mediaItemUrl : image.mediaItemUrl})
+        //     console.log("OBRAZKI W APOLLO")
+        //     console.log(images)
+        // }
+        console.log("TEST PRZED APOLLO")
         console.log(product.node.images)
         productsArray = [...productsArray, {
             id: product.node.id,
@@ -97,6 +153,7 @@ export const getProducts = async() => {
                 mediaItemUrl: product.node.imagePrimary != null ? product.node.imagePrimary.mediaItemUrl : null,
             },
             images: [
+                // product.node.images != null ? product.node.images.map((image) => image.mediaItemUrl) : null,
                 product.node.images != null ? product.node.images : null,
             ],
         }]
@@ -117,9 +174,10 @@ export const getCategoryBySlug = async(slug) => {
     return category;
 }
 
-export const getProductsByCategoryId = async(id) =>{
-
+export const getProductBySlug = async(slug) =>{
+    const products = await getProducts();
+    const productBySlug = products.filter((products) => products.slug == slug)
+    return productBySlug[0];
 }
 
 
-export default client;

@@ -8,6 +8,9 @@ import Products from './pages/products';
 import Footer from "./components/Footer/Footer";
 import {MobileFooter} from "./components/Footer/MobileFooter";
 import {Routes, Route} from "react-router-dom";
+import {ApolloProvider, useQuery, gql, ApolloClient, InMemoryCache} from "@apollo/client";
+// import {client, GET_PRODUCTS} from "utils/apollo-client";
+
 
 const links = [
     {"link": "/", "label": "Home"},
@@ -15,6 +18,8 @@ const links = [
     {"link": "/map", "label": "Dojazd"},
     {"link": "/products", "label": "Produkty"},
 ];
+
+
 
 function App() {
     const [scrollTop, setScrollTop] = useState(true);
@@ -42,23 +47,25 @@ function App() {
 
 
   return (
-      <MantineProvider
-          theme={{
-              primaryColor: 'blue',
-          }}
-      >
-        <div className="App">
-            <main>
-                <HeaderMenuColored links={links} transparent={scrollTop}/>
-                <Routes>
-                    <Route path="/" element={<Home />}></Route>
-                    <Route path="/products" element={<Products />}></Route>
-                </Routes>
-                <Footer primaryColor={primaryColor}/>
-                <MobileFooter/>
-            </main>
-        </div>
-      </MantineProvider>
+      <ApolloProvider client={client}>
+          <MantineProvider
+              theme={{
+                  primaryColor: 'blue',
+              }}
+          >
+            <div className="App">
+                <main>
+                    <HeaderMenuColored links={links} transparent={scrollTop}/>
+                    <Routes>
+                        <Route path="/" element={<Home />}></Route>
+                        <Route path="/products" element={<Products />}></Route>
+                    </Routes>
+                    <Footer primaryColor={primaryColor}/>
+                    <MobileFooter/>
+                </main>
+            </div>
+          </MantineProvider>
+      </ApolloProvider>
   );
 }
 

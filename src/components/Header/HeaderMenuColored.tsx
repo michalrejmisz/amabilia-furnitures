@@ -1,7 +1,7 @@
 import { createStyles, Header, Menu, Group, Center, Burger, Container, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconChevronDown } from '@tabler/icons';
-import Logo from './Logo';
+import Logo from '../UI/Logo';
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
@@ -91,7 +91,9 @@ export function HeaderMenuColored({ links, transparent }: HeaderSearchProps ) {
     const { classes } = useStyles();
     const {pathname} = useRouter();
 
-    if(pathname.indexOf('/products/') === 0 || pathname.indexOf('/products') === 0){
+    if(pathname.indexOf('/products/') === 0 || pathname.indexOf('/products') === 0 ||
+        pathname.indexOf('/product/') === 0 || pathname.indexOf('/product') === 0
+    ){
         transparent = false;
     }
 

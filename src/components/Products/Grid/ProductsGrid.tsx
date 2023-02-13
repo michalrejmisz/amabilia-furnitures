@@ -12,6 +12,30 @@ const ProductsGrid: React.FC<{products : IProduct[]}> = ({products}) => {
             {products.map((product) => (
                 <Grid.Col span={12} xs={6} md={4} ><SingleProductCard product={product}/></Grid.Col>
             ))}
+            {products.map((product) => (
+                <Grid.Col span={12} xs={6} md={4} ><SingleProductCard product={product}/></Grid.Col>
+            ))}
+            {products.map((product) => (
+                <Grid.Col span={12} xs={6} md={4} ><SingleProductCard product={product}/></Grid.Col>
+            ))}
+            {products.map((product) => (
+                <Grid.Col span={12} xs={6} md={4} ><SingleProductCard product={product}/></Grid.Col>
+            ))}
+            {products.map((product) => (
+                <Grid.Col span={12} xs={6} md={4} ><SingleProductCard product={product}/></Grid.Col>
+            ))}
+            {products.map((product) => (
+                <Grid.Col span={12} xs={6} md={4} ><SingleProductCard product={product}/></Grid.Col>
+            ))}
+            {products.map((product) => (
+                <Grid.Col span={12} xs={6} md={4} ><SingleProductCard product={product}/></Grid.Col>
+            ))}
+            {products.map((product) => (
+                <Grid.Col span={12} xs={6} md={4} ><SingleProductCard product={product}/></Grid.Col>
+            ))}
+            {products.map((product) => (
+                <Grid.Col span={12} xs={6} md={4} ><SingleProductCard product={product}/></Grid.Col>
+            ))}
         </Grid>
     );
 }

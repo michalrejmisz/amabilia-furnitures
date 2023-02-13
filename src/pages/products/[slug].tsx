@@ -4,7 +4,7 @@ import { useViewportSize } from '@mantine/hooks';
 import ProductsNavbar from "../../components/Products/Navbar/ProductsNavbar";
 import ProductsGrid from "../../components/Products/Grid/ProductsGrid";
 import {InformationBanner} from "../../components/Products/InformationBanner/InformationBanner";
-import {Layout} from '../../components/Layout/Layout';
+import {Layout} from '../../Layout/Layout';
 import type { NextPageWithLayout } from '../_app'
 // import Home from "./Home";
 import {getCategories, getCategoryBySlug, getProducts, getProductsByCategory} from "../../utils/apollo-client";
@@ -64,12 +64,9 @@ Products.getLayout = function getLayout(page: React.ReactElement){
 
 export const getStaticProps: GetStaticProps = async(context) => {
     const { slug } = context.params as IParams
-    console.log("------------SLUGUS--------------")
     const category = await getCategoryBySlug(slug)
     const categories = await getCategories();
     const productsByCategory = await getProductsByCategory(category)
-    console.log(productsByCategory)
-    console.log("--------")
     return {
         props: {
             slug,
