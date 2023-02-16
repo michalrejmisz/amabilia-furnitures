@@ -29,15 +29,9 @@ const useStyles = createStyles((theme) => ({
         animationIterationCount: "Infinite",
 
         "@keyframes zooming": {
-            // "80%": {
-            //     transform: "rotate(15deg)",
-            // },
             "50%": {
                 transform: "scale(1.3)",
             },
-            // "to": {
-            //     transform: "rotate(15deg)",
-            // },
         },
 
     },
@@ -52,13 +46,11 @@ export const LoadingScreen: React.FC<Props> = ({ children, isLoading }) => {
 
     return isLoading ? (
                 <div className={classes.background}>
-                    {/*<div style={{ textAlign: 'center', marginTop: '20%' }}>*/}
-                        <Center style={{width: "100vw", height: "100vh"}}>
-                                <div className={classes.logo}>
-                                    <Logo/>
-                                </div>
-                        </Center>
-                    {/*</div>*/}
+                    <Center style={{width: "100vw", height: "100vh"}}>
+                            <div className={classes.logo}>
+                                <Logo/>
+                            </div>
+                    </Center>
                 </div>
             ) : (
                 children

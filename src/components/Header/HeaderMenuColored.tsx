@@ -153,10 +153,12 @@ export function HeaderMenuColored({ links, transparent }: HeaderSearchProps ) {
         <Header height={80} className={`${classes.header} ${transparent && classes.transparent}`}>
             {/*<Container size={"lg"}>*/}
                 <div className={classes.inner}>
-                    <div className={classes.inner} style={{marginLeft: 0}}>
-                        <Logo/>
-                        <Title order={2} color="white">Amabilia</Title>
-                    </div>
+                        <Link href={"/"}>
+                            <div className={classes.inner} style={{marginLeft: 0}}>
+                                <Logo/>
+                                <Title order={2} color="white">Amabilia</Title>
+                            </div>
+                        </Link>
                     <Group spacing={5} className={classes.links}>
                         {items}
                         <a

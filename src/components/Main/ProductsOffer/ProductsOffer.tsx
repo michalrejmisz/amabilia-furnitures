@@ -1,7 +1,4 @@
-import {Wrapper} from "@storybook/addon-docs";
 import {Button, createStyles, Paper, Text, Title, Center, Grid, Container, Transition } from "@mantine/core";
-// import {Comment} from "postcss";
-import {Carousel} from "@mantine/carousel";
 import {CardsCarousel} from "./CardCarousel";
 
 const data = [

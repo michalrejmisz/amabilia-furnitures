@@ -1,4 +1,19 @@
-import {createStyles, Text, Card, RingProgress, Group, Grid, SimpleGrid, Image, Title, Container, Center, Skeleton, useMantineTheme} from '@mantine/core';
+import {
+    createStyles,
+    Text,
+    Card,
+    RingProgress,
+    Group,
+    Grid,
+    SimpleGrid,
+    Image,
+    Title,
+    Container,
+    Center,
+    Skeleton,
+    useMantineTheme}
+from '@mantine/core';
+import Link from 'next/link';
 
 export const PhoneCallMakeIcon = () => {
     return(
@@ -30,16 +45,19 @@ const data = [
         svg: <PhoneCallMakeIcon/>,
         title: 'Kliknij i zadzwoń!',
         text: "777 999 888",
+        onClick: () => window.open('tel:+1234567890'),
     },
     {
         svg: <PhoneCallReceiveIcon/>,
         title: 'Kliknij i zostaw numer',
         text: 'A my oddzwonimy!',
+        onClick: () => window.open('tel:+1234567890'),
     },
     {
         svg: <MailIcon/>,
         title: 'Wyślij maila',
         text: 'Zostaw wiadomość za pomocą formularza',
+        onClick: "",
     },
 ];
 
@@ -166,43 +184,38 @@ const useStyles = createStyles((theme) => ({
 
 }));
 
+
 interface CardProps {
     svg: JSX.Element;
     title: string;
     text: string;
+    onClick?: () => void;
 }
 
-const CardExamples = ({svg, title, text} : CardProps) => {
+
+
+
+const CardExamples = ({svg, title, text, href, onClick} : CardProps) => {
     const { classes } = useStyles();
     const theme = useMantineTheme();
+    const RedirectProps = () => {
+        if(href){
+            return href
+        } else if(onClick){
+            return onClick
+        }
+    };
 
     return(
-        // <Card radius={"lg"} withBorder className={classes.card}>
-        //     <Grid className={classes.gridBoth}>
-        //         {svg}
-        //         {/*<Grid.Col xs={4} sm={5} md={4} className={classes.gridSvg} >*/}
-        //         {/*/!*<Grid.Col xs={4} sm={5} md={4} >*!/*/}
-        //         {/*/!*    <Center>*!/*/}
-        //         {/*        {svg}*/}
-        //         {/*    /!*</Center>*!/*/}
-        //         {/*</Grid.Col>*/}
-        //         <Grid.Col xs={8} sm={7} md={8} className={classes.gridTitle}>
-        //             {/*<Container style={{padding: '0px'}}>*/}
-        //                 <Title order={5} color={theme.colors[theme.primaryColor][7]} mt={"md"}>{title}</Title>
-        //                 <Title order={6} color={theme.colors[theme.primaryColor][5]} mt={"xs"}>{text}</Title>
-        //             {/*</Container>*/}
-        //         </Grid.Col>
-        //     </Grid>
-        // </Card>
-        <Card radius={"lg"} withBorder className={classes.card}>
-            <Grid>
-                <Grid.Col span={4} xs={12} sm={12} md={4} lg={4} xl={4} className={classes.svgPadding}>{svg}</Grid.Col>
-                <Grid.Col span={8} xs={12} sm={12} md={8} lg={8} xl={8}>
-                    <Title order={5} color={theme.colors[theme.primaryColor][7]} mt={"md"}>{title}</Title>
-                    <Title order={6} color={theme.colors[theme.primaryColor][5]} mt={"xs"}>{text}</Title>
-                </Grid.Col>
-            </Grid>
-        </Card>
+            <Card radius={"lg"} withBorder className={classes.card} onClick={onClick}>
+                <Grid>
+                    <Grid.Col span={4} xs={12} sm={12} md={4} lg={4} xl={4} className={classes.svgPadding}>{svg}</Grid.Col>
+                    <Grid.Col span={8} xs={12} sm={12} md={8} lg={8} xl={8}>
+                        <Title order={5} color={theme.colors[theme.primaryColor][7]} mt={"md"}>{title}</Title>
+                        <Title order={6} color={theme.colors[theme.primaryColor][5]} mt={"xs"}>{text}</Title>
+                    </Grid.Col>
+                </Grid>
+            </Card>
     );
 }
 
