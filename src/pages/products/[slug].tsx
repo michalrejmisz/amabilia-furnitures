@@ -29,11 +29,16 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
     }
 }));
 
+interface Props{
+    categories: ICategory[];
+    products: IProduct[];
+}
 
-const Products: NextPageWithLayout<{ categories : ICategory[], products : IProduct[]}> = ({categories, products}) =>{
+
+const Products: NextPageWithLayout<Props> = ({categories, products}) => {
     const { height: viewPortHeight, width: viewPortWidth } = useViewportSize();
     const { classes } = useStyles({ viewPortHeight, viewPortWidth });
-    console.log("PRODUCTS IN PRODUCTS"+products)
+    console.log("PRODUCTS IN PRODUCTS", products)
     return(
         <Fragment>
                 <Container size={'lg'} className={classes.wrapper}>
@@ -64,21 +69,49 @@ Products.getLayout = function getLayout(page: React.ReactElement){
 
 export const getStaticProps: GetStaticProps = async(context) => {
     const { slug } = context.params as IParams
-    const category = await getCategoryBySlug(slug)
-    const categories = await getCategories();
-    const productsByCategory = await getProductsByCategory(category)
+    // const category = await getCategoryBySlug(slug)
+    // const categories = await getCategories();
+
+    const categories = [
+        {id: "xd1", name: "Kategoria 1", slug: "slug-1", image: ''},
+        {id: "xd2", name: "Kategoria 2", slug: "slug-2", image: ''},
+        {id: "xd3", name: "Kategoria 2", slug: "slug-3", image: ''},
+    ];
+
+    const productsDumb = [
+        {id: "1", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "2", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "3", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "4", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+    ]
+    // const productsByCategory = await getProductsByCategory(category)
     return {
         props: {
             slug,
             categories,
-            products: productsByCategory,
+            products: productsDumb,
         },
         revalidate: 10, // In seconds
     };
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const categories = await getCategories();
+
+
+    const categories = [
+        {id: "xd1", name: "Kategoria 1", slug: "slug-1", image: ''},
+        {id: "xd2", name: "Kategoria 2", slug: "slug-2", image: ''},
+        {id: "xd3", name: "Kategoria 2", slug: "slug-3", image: ''},
+    ];
+
+    const productsDumb = [
+        {id: "1", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "2", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "3", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "4", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+    ]
+
+    // const categories = await getCategories();
     const paths = categories.map((category) => ({
         params: {slug : category.slug}
     }))

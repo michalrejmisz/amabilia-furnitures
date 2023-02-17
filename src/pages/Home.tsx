@@ -7,7 +7,7 @@ import {ContactUsForm} from "../components/Main/ContactForm/ContactUsForm";
 import {client, Layout} from "../Layout/Layout";
 import type { NextPageWithLayout } from './_app'
 // import { getCategories } from '../utils/wordpress';
-import { getCategories, getProductsNew } from '../utils/apollo-client';
+// import { getCategories, getProductsNew } from '../utils/apollo-client';
 import {gql, useQuery, TypedDocumentNode} from "@apollo/client";
 import {IProduct} from '../interfaces/Products';
 
@@ -89,15 +89,15 @@ Home.getLayout = function getLayout(page: React.ReactElement){
 
 
 export async function getStaticProps() {
-    const products = await getProductsNew()
-    console.log(products)
-    const categories = await getCategories();
-    console.log(categories)
+    // const products = await getProductsNew()
+    // console.log(products)
+    // const categories = await getCategories();
+    // console.log(categories)
     console.log("test static props")
 
     return {
         props: {
-            categories,
+            // categories,
         },
         revalidate: 10, // In seconds
     };

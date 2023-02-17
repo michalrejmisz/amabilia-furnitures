@@ -6,7 +6,7 @@ import {HeaderMenuColored} from "../components/Header/HeaderMenuColored";
 import Footer from "../components/Footer/Footer";
 import {MobileFooter} from "../components/Footer/MobileFooter";
 import {ApolloProvider, useQuery, gql, ApolloClient, InMemoryCache} from "@apollo/client";
-import {GET_PRODUCTS} from "../utils/apollo-client";
+// import {GET_PRODUCTS} from "../utils/apollo-client";
 import {LoadingScreen} from "../components/UI/LoadingScreen/LoadingScreen";
 // import {Switch} from 'next/router';
 
@@ -33,7 +33,7 @@ export const Layout = ({children} : Props) => {
     const [scrollTop, setScrollTop] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        const handleScroll = (event) => {
+        const handleScroll = () => {
             if(window.scrollY > 0){
                 setScrollTop(false)
             } else {

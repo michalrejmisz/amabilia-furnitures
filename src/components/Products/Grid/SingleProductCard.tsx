@@ -183,7 +183,7 @@ export const SingleProductCard: React.FC<{product : IProduct}> = ({product}) => 
                                     <IconShoppingCart size={35} stroke={1.5}    /> Dodaj do koszyka
                                     <NumberInput
                                         value={1}
-                                        min="1"
+                                        min={1}
                                         size="xs"
                                         description=""
                                         style={{width: "50px", marginLeft: "10px"}}

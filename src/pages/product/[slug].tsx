@@ -67,12 +67,25 @@ Product.getLayout = function getLayout(page: React.ReactElement){
 
 export const getStaticProps: GetStaticProps = async(context) => {
     const { slug } = context.params as IParams
-    const product = await getProductBySlug(slug);
-    const category = await getCategoryBySlug(slug)
-    const categories = await getCategories();
+    // const product = await getProductBySlug(slug);
+    // const category = await getCategoryBySlug(slug)
+    // const categories = await getCategories();
     console.log("-------------------")
-    console.log(product);
+    // console.log(product);
     console.log("-------------------")
+
+    const categories = [
+        {id: "xd1", name: "Kategoria 1", slug: "slug-1", image: ''},
+        {id: "xd2", name: "Kategoria 2", slug: "slug-2", image: ''},
+        {id: "xd3", name: "Kategoria 2", slug: "slug-3", image: ''},
+    ];
+
+    const product = [
+        {id: "1", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "2", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "3", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "4", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+    ]
 
     return {
         props: {
@@ -85,10 +98,29 @@ export const getStaticProps: GetStaticProps = async(context) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const products = await getProducts();
+    // const products = await getProducts();
+    // const paths = products.map((product) => ({
+    //     params: {slug : product.slug}
+    // }))
+
+
+    const categories = [
+        {id: "xd1", name: "Kategoria 1", slug: "slug-1", image: ''},
+        {id: "xd2", name: "Kategoria 2", slug: "slug-2", image: ''},
+        {id: "xd3", name: "Kategoria 2", slug: "slug-3", image: ''},
+    ];
+
+    const products = [
+        {id: "1", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "2", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "3", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+        {id: "4", name: "prod 1", slug: "slug1", title: "Tit", description: "dsc", price: 25, categoryId: "xd1", imagePrimary: [], images: [] },
+    ]
+
     const paths = products.map((product) => ({
         params: {slug : product.slug}
     }))
+
     return {
         paths,
         fallback: false,

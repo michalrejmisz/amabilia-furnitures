@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import {
     createStyles,
     Center,
@@ -7,7 +7,7 @@ import {
 import Logo from "../Logo";
 
 interface Props {
-    children: React.ReactNode;
+    children?: ReactNode;
     isLoading: boolean;
 }
 
@@ -43,17 +43,17 @@ const useStyles = createStyles((theme) => ({
 export const LoadingScreen: React.FC<Props> = ({ children, isLoading }) => {
 
     const {classes} = useStyles();
-
-    return isLoading ? (
-                <div className={classes.background}>
-                    <Center style={{width: "100vw", height: "100vh"}}>
-                            <div className={classes.logo}>
-                                <Logo/>
-                            </div>
-                    </Center>
-                </div>
-            ) : (
-                children
-            );
+    return isLoading ? <div>Loading...</div> : <>{children}</>;
+    // return isLoading ? (
+    //             <div className={classes.background}>
+    //                 <Center style={{width: "100vw", height: "100vh"}}>
+    //                         <div className={classes.logo}>
+    //                             <Logo/>
+    //                         </div>
+    //                 </Center>
+    //             </div>
+    //         ) : (
+    //             {children}
+    //         );
 };
 

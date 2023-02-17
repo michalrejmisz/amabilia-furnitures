@@ -69,7 +69,7 @@ const BRANDS = ['Ikea', 'Black&Red', 'Obi', 'Leroy', 'Castoram']
 
 interface CategoryFrameProps {
     name: string,
-    items: Array<string>;
+    items: ICategory[];
 }
 
 const CategoryFrame = ({name, items} : CategoryFrameProps) => {
@@ -88,8 +88,8 @@ const CategoryFrame = ({name, items} : CategoryFrameProps) => {
 }
 
 
-const ProductsNavbar = ({categories} : ICategory[] ) => {
-    const categoriesNames = categories.map((category: ICategory) => category.name)
+const ProductsNavbar = ({categories} : { categories : ICategory[] }) => {
+    // const categoriesNames = categories.map((category: ICategory) => category.name)
     return(
         <Fragment>
             <CategoryFrame name={'Kategoria'} items={categories}/>

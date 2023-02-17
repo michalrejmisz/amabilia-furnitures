@@ -57,7 +57,7 @@ const data = [
         svg: <MailIcon/>,
         title: 'Wyślij maila',
         text: 'Zostaw wiadomość za pomocą formularza',
-        onClick: "",
+        onClick: () => window.open('tel:+1234567890'),
     },
 ];
 
@@ -195,16 +195,16 @@ interface CardProps {
 
 
 
-const CardExamples = ({svg, title, text, href, onClick} : CardProps) => {
+const CardExamples = ({svg, title, text, onClick} : CardProps) => {
     const { classes } = useStyles();
     const theme = useMantineTheme();
-    const RedirectProps = () => {
-        if(href){
-            return href
-        } else if(onClick){
-            return onClick
-        }
-    };
+    // const RedirectProps = () => {
+    //     if(href){
+    //         return href
+    //     } else if(onClick){
+    //         return onClick
+    //     }
+    // };
 
     return(
             <Card radius={"lg"} withBorder className={classes.card} onClick={onClick}>

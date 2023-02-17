@@ -114,18 +114,18 @@ export const ProductComponent: React.FC<{ product : IProduct}>  = ({product}) =>
     const { classes } = useStyles();
     const theme = useMantineTheme();
     const thumb = "/images/no-thumb.png";
-    let imagesArray = []
+    let imagesArray: string[] = [];
 
 
     if (product.imagePrimary.mediaItemUrl != null){
         imagesArray = [product.imagePrimary.mediaItemUrl, ...imagesArray];
     }
-    if(product.images[0] != null){
-        product.images[0].map((image) => {imagesArray = [...imagesArray, image.mediaItemUrl]})
-    }
-    if(imagesArray.length === 0){
-        imagesArray = [thumb]
-    }
+    // if(product.images[0] != null){
+    //     product.images[0].map((img) => {imagesArray = [...imagesArray, img.mediaItemUrl]})
+    // }
+    // if(imagesArray.length === 0){
+    //     imagesArray = [thumb]
+    // }
 
     const [primaryImage, setPrimaryImage] = useState(imagesArray[0])
     const handlePrimaryPhotoChange = (value: string) => {
