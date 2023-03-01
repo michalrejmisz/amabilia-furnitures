@@ -10,11 +10,14 @@ import {
     Text,
     List,
     Grid,
+    Center,
 } from '@mantine/core';
 import { IconCheck } from '@tabler/icons';
 import image from './image.svg';
 import {Fragment} from 'react';
 import BottomContactArea from "./BottomContactArea";
+import {useQuery} from "@apollo/client";
+import {ENTIRE_STATIC_CONTENT} from "../../../lib/graphql/pagesContent";
 
 const useStyles = createStyles((theme) => ({
     inner: {
@@ -73,20 +76,28 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-export function HeroBullets() {
+interface HeroBulletsProps{
+    handleScrollToMail: () => void;
+}
+
+export function HeroBullets({handleScrollToMail} : HeroBulletsProps) {
+    const { loading, error, data } = useQuery(ENTIRE_STATIC_CONTENT, {
+        fetchPolicy: 'network-only',
+        nextFetchPolicy: 'cache-first',
+    });
     const { classes } = useStyles();
     const theme = useMantineTheme();
     return (
         <Fragment>
             <Container size={"lg"}>
                 <div className={classes.inner}>
-                    <Image src="/static/images/desk_main.png" className={classes.image} />
+                    <Image src={`${process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FOLDER}${data?.stronaTytulowaZdjecieBiurkaInformacje?.data?.attributes?.Zdjecie?.data?.attributes?.url ?? ""}${"?format=webp"}`} className={classes.image} alt=""/>
                     <div className={classes.content}>
                         <Title className={classes.title}>
-                            <span className={classes.highlight}>Amabilia</span> Nieźle <br /> Cię urządzimy
+                            <span className={classes.highlight}>{data?.stronaTytulowaZdjecieBiurkaInformacje?.data?.attributes?.TytulPodkreslenie ?? ""}</span> {data?.stronaTytulowaZdjecieBiurkaInformacje?.data?.attributes?.TytulPierwszyWiersz ?? ""} <br/> {data?.stronaTytulowaZdjecieBiurkaInformacje?.data?.attributes?.TytulDrugiWiersz ?? ""}
                         </Title>
                         <Text color="white" mt="md">
-                            W ofercie znajdą Państwo nie tylko tanie meble używane i poleasingowe, ale również końcówki serii w bardzo dobrych cenach.
+                            {data?.stronaTytulowaZdjecieBiurkaInformacje?.data?.attributes?.Podtytul ?? ""}
                         </Text>
 
                         <List
@@ -100,19 +111,28 @@ export function HeroBullets() {
                                 </ThemeIcon>
                             }
                         >
-                            <List.Item style={{color: theme.colors[theme.primaryColor][2]}}>
-                                <span className={classes.highlight}><b style={{color: "white"}}>Meble poleasingowe</b></span> – w naszej ofercie znajdą Państwo końcówki serii oraz meble poleasingowe
-                            </List.Item>
-                            <List.Item style={{color: theme.colors[theme.primaryColor][2]}}>
-                                <span className={classes.highlight}><b style={{color: "white"}}>Rabat</b></span>  – Złóż zamówienie z płatnością przy odbiorze, a otrzymasz rabat!
-                            </List.Item>
-                            <List.Item style={{color: theme.colors[theme.primaryColor][2]}}>
-                                <span className={classes.highlight}><b style={{color: "white"}}>Darmowa dostawa</b></span> – w zależności od wielkości zamówienia oraz odległości od klienta możliwa jest darmowa dostawa,<br /> zadzwoń a napewno się dogadamy!
-                            </List.Item>
+                            {data?.stronaTytulowaZdjecieBiurkaInformacje?.data?.attributes?.InformacjeOdMyslnika?.map((singleDash, index) => {
+                                return(
+                                    <List.Item key={index} style={{color: theme.colors[theme.primaryColor][2]}}>
+                                        <span className={classes.highlight}><b style={{color: "white"}}>{singleDash?.PogrubionyTekst}</b></span> – {singleDash?.TekstPoMyslniku}
+                                    </List.Item>
+                                )
+                            })}
+                            {/*<List.Item style={{color: theme.colors[theme.primaryColor][2]}}>*/}
+                            {/*    <span className={classes.highlight}><b style={{color: "white"}}>Meble poleasingowe</b></span> – w naszej ofercie znajdą Państwo końcówki serii oraz meble poleasingowe*/}
+                            {/*</List.Item>*/}
+                            {/*<List.Item style={{color: theme.colors[theme.primaryColor][2]}}>*/}
+                            {/*    <span className={classes.highlight}><b style={{color: "white"}}>Rabat</b></span>  – Złóż zamówienie z płatnością przy odbiorze, a otrzymasz rabat!*/}
+                            {/*</List.Item>*/}
+                            {/*<List.Item style={{color: theme.colors[theme.primaryColor][2]}}>*/}
+                            {/*    <span className={classes.highlight}><b style={{color: "white"}}>Darmowa dostawa</b></span> – w zależności od wielkości zamówienia oraz odległości od klienta możliwa jest darmowa dostawa,<br /> zadzwoń a napewno się dogadamy!*/}
+                            {/*</List.Item>*/}
                         </List>
                     </div>
                 </div>
-                <BottomContactArea/>
+                <Center>
+                    <BottomContactArea handleScrollToMail={handleScrollToMail}/>
+                </Center>
             </Container>
         </Fragment>
     );

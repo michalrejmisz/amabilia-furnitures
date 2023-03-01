@@ -1,5 +1,6 @@
 import {
     createStyles,
+    Button
 } from '@mantine/core';
 import {InputWithButton} from "./SearchInput";
 import {OrderByField} from "./OrderByField";
@@ -12,16 +13,20 @@ const useStyles = createStyles((theme) => ({
         height: '60px',
         width: '100%',
         // alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
     }
 }))
 
-export const SearchBar = () => {
+interface SearchBarProps {
+    handleSearchInput: (arg: string) => void;
+}
+
+export const SearchBar = ({handleSearchInput} : SearchBarProps) => {
     const { classes } =useStyles()
     return(
-        <div className={classes.searchBar}>
-            <OrderByField/>
-            <InputWithButton/>
+        <div className={classes.searchBar} >
+            {/*<OrderByField/>*/}
+            <InputWithButton searchInputFunction={handleSearchInput}/>
         </div>
     )
 }

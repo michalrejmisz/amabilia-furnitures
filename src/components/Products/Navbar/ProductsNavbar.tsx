@@ -8,6 +8,9 @@ import {
 } from '@mantine/core'
 import Link from 'next/link';
 import {ICategory} from "../../../interfaces/Categories";
+import { PRODUCTS_ALL } from "../../../lib/graphql/products";
+import {useQuery} from "@apollo/client";
+import {CATEGORIES_ALL, SPECIAL_CATEGORIES_ALL} from "../../../lib/graphql/categories";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -50,37 +53,77 @@ const useStyles = createStyles((theme) => ({
         lineHeight: '50px',
         paddingLeft: '10px',
         borderBottom: '1px solid #eee',
+
         '&:last-child': {
             borderBottom: 'none',
             // backgroundColor: 'red',
         },
 
+
+
         '&:hover': {
-          color: theme.colors[theme.primaryColor][5]
+          color: theme.colors[theme.primaryColor][5],
         },
-    }
+
+    },
+
+    active: {
+        color: theme.colors[theme.primaryColor][5],
+    },
 
 
 }))
 
 
 const CATEGORIES = ['Stoły', 'Krzesła', 'Biurka', 'Recepcje', 'Kontenerki', 'Zestawy']
-const BRANDS = ['Ikea', 'Black&Red', 'Obi', 'Leroy', 'Castoram']
+const BRANDS = ['Ikea', 'Black&Red', 'Obi', 'Leroy', 'Castorama']
 
 interface CategoryFrameProps {
     name: string,
-    items: ICategory[];
+    items?: ICategory[];
+    activeCategory: string;
 }
 
-const CategoryFrame = ({name, items} : CategoryFrameProps) => {
+interface ProductsNavbarProps {
+    categories: ICategory[],
+    currentSlug: string,
+}
+
+const SpecialCategoryFrame = ({name, items, activeCategory} : CategoryFrameProps) => {
     const { classes } = useStyles();
+    const { data: specialCategories} = useQuery(SPECIAL_CATEGORIES_ALL);
+
+    let showNavbar = true
+    if (!specialCategories || !specialCategories.wlasnaKategorias || specialCategories.wlasnaKategorias.data.length === 0) {
+        // Return null if specialCategories is falsy or the data array is empty
+        showNavbar = false
+    }
 
     return(
-        <Card shadow={'md'} mb={'lg'} className={classes.card}>
+        showNavbar && (
+        <Card shadow={'md'} mb={'lg'} className={classes.card} style={{paddingBottom: '4px', marginTop: '40px'}}>
             <Card.Section className={classes.cardHeader}>{name}</Card.Section>
             <ul className={classes.categoryList}>
-                {items.map((category) => (
-                    <Link href={`/products/${category.slug}`}><li className={classes.categoryListItem}>{category.name}</li></Link>
+                {specialCategories?.wlasnaKategorias?.data?.map((category: { attributes: { Link?: string, Nazwa?: string } })  => (
+                    <Link href={`/products/special-category/${category.attributes?.StworzKategorie?.Link}`} key={category.attributes.StworzKategorie?.Link} legacyBehavior><li key={category.attributes.StworzKategorie?.Link} className={`${classes.categoryListItem} ${activeCategory === category.attributes.StworzKategorie?.Link ? classes.active : ""}`}>{category.attributes.StworzKategorie?.Nazwa}</li></Link>
+                ))}
+            </ul>
+        </Card>
+        )
+    )
+}
+
+const CategoryFrame = ({name, items, activeCategory} : CategoryFrameProps) => {
+    const { classes } = useStyles();
+    const { data: categories} = useQuery(CATEGORIES_ALL);
+    const { data: specialCategories} = useQuery(SPECIAL_CATEGORIES_ALL);
+
+    return(
+        <Card shadow={'md'} mb={'lg'} className={classes.card} style={{paddingBottom: '4px'}}>
+            <Card.Section className={classes.cardHeader}>{name}</Card.Section>
+            <ul className={classes.categoryList}>
+                {categories.categories?.data?.map((category: { attributes: { Link?: string, Nazwa?: string } })  => (
+                    <Link href={`/products/category/${category.attributes?.Link}`} key={category.attributes.Link} legacyBehavior><li key={category.attributes.Link} className={`${classes.categoryListItem} ${activeCategory === category.attributes?.Link ? classes.active : ""}`}>{category.attributes?.Nazwa}</li></Link>
                 ))}
             </ul>
         </Card>
@@ -88,12 +131,13 @@ const CategoryFrame = ({name, items} : CategoryFrameProps) => {
 }
 
 
-const ProductsNavbar = ({categories} : { categories : ICategory[] }) => {
+const ProductsNavbar = ({categories, currentSlug} : ProductsNavbarProps) => {
     // const categoriesNames = categories.map((category: ICategory) => category.name)
+    const { loading: loadingCategories, error: errorCategories, data: dataCategories, fetchMore: fetchCategories, networkStatus: networkCategories } = useQuery(CATEGORIES_ALL);
     return(
         <Fragment>
-            <CategoryFrame name={'Kategoria'} items={categories}/>
-            {/*<CategoryFrame name={'Marki'} items={BRANDS}/>*/}
+            <CategoryFrame name={'Kategoria'} activeCategory={currentSlug}/>
+            <SpecialCategoryFrame name={'Inne'} activeCategory={currentSlug}/>
         </Fragment>
     );
 }

@@ -79,20 +79,24 @@ function Card({ image }: CardProps) {
             className={classes.card}
         >
             <Center className={classes.img}>
-                <Image src={image}/>
+                <Image src={image} alt="Miniaturka Marki"/>
             </Center>
         </Paper>
     );
 }
 
-export function CardsCarousel() {
+interface CardCarouselProps{
+    brands: Array[];
+}
+
+export function CardsCarousel({brands} : CardCarouselProps ) {
     const { classes } = useStyles();
     const autoplay = useRef(Autoplay({ delay: 2000 }));
     const theme = useMantineTheme();
     const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
-    const slides = data.map((item) => (
-        <Carousel.Slide>
-            <Card key={item.image} {...item}/>
+    const slides = brands.map((item) => (
+        <Carousel.Slide key={item.attributes?.formats?.thumbnail.url}>
+            <Card key={`${process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FOLDER}${item.attributes?.formats?.thumbnail.url}`} image={`${process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FOLDER}${item.attributes?.formats?.thumbnail.url}${"?format=webp"}`}/>
         </Carousel.Slide>
     ));
 

@@ -19,7 +19,6 @@ const ButtonColor = ({themeColor} : ButtonColorProps) => {
       const cutColor = themeColor.split('.')[0]
       setColor(cutColor)
       theme.primaryColor = color;
-      console.log(color);
   }
 
   return(

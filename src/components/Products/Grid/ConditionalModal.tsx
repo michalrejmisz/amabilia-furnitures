@@ -5,9 +5,11 @@ import Link from "next/link";
 interface Props {
     to: string;
     openModal: () => void;
+    children: React.ReactNode;
+    title: string;
 }
 
-export const ConditionalModal: React.FC<Props> = ({ to, openModal, children }) => {
+export const ConditionalModal: React.FC<Props> = ({ to, title, openModal, children }) => {
     const {width} = useViewportSize();
 
     const handleClick = (event: React.MouseEvent) => {
@@ -15,11 +17,12 @@ export const ConditionalModal: React.FC<Props> = ({ to, openModal, children }) =
         openModal();
     };
 
-    return width > 768 ? (
-        <a href="#" onClick={handleClick} style={{height: '100%'}}>
+    return width >= 1280 ? (
+        // <Link href={{ pathname: `/product/${to}` }} legacyBehavior ><a style={{height: '100%'}}>{children}</a></Link>
+        <a href="#" onClick={handleClick} style={{height: '100%'}} title={title}>
             {children}
         </a>
     ) : (
-        <Link href={{ pathname: `/product/${to}` }}><a style={{height: '100%'}}>{children}</a></Link>
+        <Link href={{ pathname: `/product/${to}` }} legacyBehavior ><a style={{height: '100%'}} title={title}>{children}</a></Link>
     );
 };

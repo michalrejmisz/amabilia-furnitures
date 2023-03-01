@@ -1,5 +1,8 @@
 import {Button, createStyles, Paper, Text, Title, Center, Grid, Container, Transition } from "@mantine/core";
 import {CardsCarousel} from "./CardCarousel";
+import {useQuery} from "@apollo/client";
+import {HOME_PAGE_CATEGORIES} from "@/lib/graphql/categories";
+import Link from 'next/link';
 
 const data = [
     {
@@ -108,9 +111,13 @@ const useStyles = createStyles((theme) => ({
         alignSelf: "flex-end",
         minHeight: "50px",
         minWidth: "50px",
-        background: `url(${process.env.PUBLIC_URL}"/images/right_arrow.svg")`,
+        background: `url("/images/right_arrow.svg")`,
         // marginRight: "10px",
         marginBottom: "10px",
+        transition: "transform 0.2s ease-in-out",
+        "&:hover": {
+            transform: "translateX(5px)",
+        },
     },
 }))
 
@@ -118,33 +125,45 @@ const useStyles = createStyles((theme) => ({
 interface CardProps {
     image: string;
     title: string;
-    category: string;
+    linkToCategory: string;
 }
 
 
-function Card({ image, title, category }: CardProps) {
+function Card({ image, title, linkToCategory }: CardProps) {
     const { classes } = useStyles();
 
     return (
-        <Paper
-            shadow="md"
-            radius="md"
-            sx={{ backgroundImage: `url(${image})` }}
-            className={classes.card}
-        >
-            <Center className={classes.titleBox}>
-                <Title order={3} className={classes.title}>
-                    {title}
-                </Title>
-            </Center>
-            <div className={classes.iconBox} style={{background: `url(${process.env.PUBLIC_URL} + "/images/logo.svg")`}}/>
+        // <Link href="/products/special-category/wielka-wieprz" legacyBehavior>
+        <Link href={`${linkToCategory}`} legacyBehavior>
+            <a>
+                <Paper
+                    shadow="md"
+                    radius="md"
+                    sx={{ backgroundImage: `url(${image})`, backgroundSize: "contain", backgroundPosition: "center" , backgroundRepeat: "no-repeat" }}
+                    className={classes.card}
+                >
+                    <Center className={classes.titleBox}>
+                        <Title order={3} className={classes.title}>
+                            {title}
+                        </Title>
+                    </Center>
+                    <div className={classes.iconBox} style={{background: `url("/images/right_arrow.svg")`}}/>
+                    {/*<div className={classes.iconBox} style={{background: `url(${process.env.PUBLIC_URL} + "/images/logo.svg")`}}/>*/}
 
-        </Paper>
+                </Paper>
+            </a>
+        </Link>
     );
 }
 
-const ProductsOffer = () =>{
+interface ProductsOfferProps{
+    brands: Array[];
+}
+
+const ProductsOffer = ({brands} : ProductsOfferProps) =>{
     const { classes } = useStyles();
+    const {data: categoriesHomePage } = useQuery(HOME_PAGE_CATEGORIES)
+    const podlinkowane = categoriesHomePage?.kategoriesLinki?.data?.attributes?.Podlinkowane;
     // const cards = data.map((item)=>(
     //     <Carousel.Slide key={item.title}>
     //         <Card {...item}></Card>
@@ -155,12 +174,34 @@ const ProductsOffer = () =>{
         <Container size={"lg"} className={classes.wrapper}>
             <div className={classes.products}>
                 <div className={classes.ourOfferHeader}>Nasza oferta</div>
-                <CardsCarousel/>
+                <CardsCarousel brands={brands}/>
+                {/*<Grid>*/}
+                {/*    {data.map((item) => (<Grid.Col xs={4} md={4} lg={3} key={item.title}><Card {...item}></Card></Grid.Col>))}*/}
+                {/*</Grid>*/}
+            </div>
+            <div>
                 <Grid>
-                    {data.map((item) => (<Grid.Col xs={4} md={4} lg={3}><Card {...item}></Card></Grid.Col>))}
+                    {podlinkowane?.map((item) => (
+                        // <div key={item.id}>
+                        <Grid.Col xs={4} md={4} lg={3} key={item.title}>
+                            {item.__typename === "ComponentNowaNazwaTestowa" && (
+                                    <Card
+                                        image={`${process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FOLDER}${item.ZdjecieTestowa?.data?.attributes?.ZdjecieTestowaFormats?.small?.url || item.ZdjecieTestowa?.data?.attributes?.ZdjecieTestowaUrl}${"?format=webp"}`}
+                                        title={item.NazwaTestowa}
+                                        linkToCategory={`${"/products/category/"}${item.kategoria.data.attributes.Link}`}
+                                    />
+                            )}
+                            {item.__typename === "ComponentNowaNowaWlasna" && (
+                                    <Card
+                                        image={`${process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FOLDER}${item.ZdjecieWlasna?.data?.attributes?.ZdjecieWlasnaFormats?.small?.url || item.ZdjecieWlasna?.data?.attributes?.ZdjecieWlasnaUrl}${"?format=webp"}`}
+                                        title={item.NazwaWlasna}
+                                        linkToCategory={`${"/products/special-category/"}${item.wlasna_kategoria.data.attributes.StworzKategorie.Link}`}
+                                    />
+                            )}
+                        </Grid.Col>
+                    ))}
                 </Grid>
             </div>
-
 
         </Container>
     );

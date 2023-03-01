@@ -3,7 +3,6 @@ import {
     Text,
     Card,
     RingProgress,
-    Group,
     Grid,
     SimpleGrid,
     Image,
@@ -11,9 +10,24 @@ import {
     Container,
     Center,
     Skeleton,
+    Box,
+    TextInput,
+    Checkbox,
+    Button,
+    Group,
+    Loader,
+    Modal,
     useMantineTheme}
 from '@mantine/core';
 import Link from 'next/link';
+import {useRef, useState} from "react";
+import {useQuery} from "@apollo/client";
+import {ENTIRE_STATIC_CONTENT} from "../../../lib/graphql/pagesContent";
+import { useForm } from '@mantine/form';
+import {PrivacyPolicyModal} from "@/components/UI/PrivacyPolicy/PrivacyPolicy";
+import axios from "axios";
+import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
+
 
 export const PhoneCallMakeIcon = () => {
     return(
@@ -40,29 +54,13 @@ export const MailIcon = () => {
     )
 }
 
-const data = [
-    {
-        svg: <PhoneCallMakeIcon/>,
-        title: 'Kliknij i zadzwoń!',
-        text: "777 999 888",
-        onClick: () => window.open('tel:+1234567890'),
-    },
-    {
-        svg: <PhoneCallReceiveIcon/>,
-        title: 'Kliknij i zostaw numer',
-        text: 'A my oddzwonimy!',
-        onClick: () => window.open('tel:+1234567890'),
-    },
-    {
-        svg: <MailIcon/>,
-        title: 'Wyślij maila',
-        text: 'Zostaw wiadomość za pomocą formularza',
-        onClick: () => window.open('tel:+1234567890'),
-    },
-];
-
 const useStyles = createStyles((theme) => ({
     contactArea: {
+        // position: "absolute",
+        marginLeft: "15px",
+        marginRight: "15px",
+        position: "absolute",
+        top: "850px",
         marginTop: "-60px",
     },
 
@@ -180,8 +178,26 @@ const useStyles = createStyles((theme) => ({
         [theme.fn.smallerThan('xs')]: {
             padding: '20px',
         },
-    }
+    },
 
+    form: {
+      // backgroundColor: theme.colors[theme.primaryColor][4]
+        color: theme.white,
+        textInput: {
+            color: "red",
+        },
+
+        label: {
+            width: "100%",
+            textAlign: "left",
+            color: theme.white,
+        },
+
+        error: {
+            fontSize: "large",
+        }
+
+    }
 }));
 
 
@@ -219,12 +235,193 @@ const CardExamples = ({svg, title, text, onClick} : CardProps) => {
     );
 }
 
-const BottomContactArea = () => {
+const ModalContent = ({handleModal} : { handleModal: () => void }) => {
+    const {classes} = useStyles();
+    const theme = useMantineTheme();
+    const { executeRecaptcha } = useGoogleReCaptcha();
+    const [isSend, setIsSend] = useState(false)
+    const [isError, setIsError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const contactForm = useForm({
+        initialValues: {
+            name: '',
+            phoneNumber: '',
+            termsOfService: false,
+        },
+
+        validate: {
+            name: (value) => (value.length < 2 ?  'Minimum dwa znaki' : null),
+            phoneNumber: (value) => (value.length < 9 ? 'Za krótki numer telefonu!' : null),
+            termsOfService: (value) => (value !== true ? 'Wymagana zgoda' : null)
+        },
+
+
+    });
+
+    const handleSubmit = async() => {
+        setIsLoading(true)
+        if(contactForm.isValid()){
+            let form = {
+                formType: "phone",
+                imie: contactForm.getInputProps('name').value,
+                numer: contactForm.getInputProps('phoneNumber').value,
+            }
+            let token;
+
+            if (executeRecaptcha) {
+                token = await executeRecaptcha();
+            } else {
+                console.error('reCaptcha script not loaded');
+                return;
+            }
+
+            let formName = 'FormPhone'
+            const response = await axios.post('https://creator.amabilia-meble.pl/api/ezforms/submit', {token, formData: form})
+                .then((res) => {
+                    setIsLoading(false)
+                    setIsSend(true)
+                    contactForm.reset()
+                })
+                .catch((error) => {
+                    setIsLoading(false)
+                    setIsError(true)
+                    // error.response.status Check status code
+                }).finally(() => {
+                    setTimeout(function(){
+                        handleModal(false)
+                    }, 1500)
+                });
+        }
+        // Do something with the form data, like send it to a server
+        // or update a state variable to display a success message
+
+    };
+    const termsOfServiceText = <PrivacyPolicyModal><a style={{color: theme.white}}><u>Wyrażam zgodę na przetwarzanie danych osobowych.</u></a></PrivacyPolicyModal>
+
+    return(
+      <div className={classes.form}>
+          <Box sx={{ maxWidth: 300, marginTop: "30px", width: "300px" }} mx="auto">
+              { isLoading ? (
+                <Loader color="white" style={{margin: "30px"}}/>
+              ) : isError ? (
+                  <Title order={5} style={{marginTop: "30px", marginBottom: "30px"}}>Niestety wystąpiły problemy z uwierzytelnieniem. Prosimy spóbować ponownie później! </Title>
+                ) : isSend ? (
+                  <Title order={5} style={{marginTop: "30px", marginBottom: "30px"}}>Dziękujemy! W krótce się z Tobą skontaktujemy. </Title>
+              ) : (
+                  <>
+                      <Title order={3}>Zostaw nam swój numer, oddzwonimy!</Title>
+                      <form onSubmit={contactForm.onSubmit(handleSubmit)}>
+                          <TextInput
+                              styles={{
+                                  error: {
+                                      textAlign: "left",
+                                  },
+                              }}
+                              style={{paddingTop: "15px", paddingBottom: "15px"}}
+                              label="Imię"
+                              placeholder="Jan"
+                              withAsterisk
+                              {...contactForm.getInputProps('name')}
+                              error={contactForm.errors.name}
+                          />
+
+                          <TextInput
+                              styles={{
+                                  error: {
+                                      textAlign: "left",
+                                  },
+                              }}
+                              style={{paddingBottom: "15px"}}
+                              label="Numer"
+                              placeholder="777-222-333"
+                              withAsterisk
+                              {...contactForm.getInputProps('phoneNumber')}
+                              error={contactForm.errors.phoneNumber}
+                          />
+
+                          <Checkbox
+                              styles={{
+                                  error: {
+                                      textAlign: "left",
+                                  },
+                              }}
+                              style={{paddingTop: "15px"}}
+                              mt="md"
+                              label={termsOfServiceText}
+                              {...contactForm.getInputProps('termsOfService', { type: 'checkbox' })}
+                              error={contactForm.errors.termsOfService}
+                          />
+
+                          <Group position="right" mt="md">
+                              <Button type="submit" style={{backgroundColor: theme.colors[theme.primaryColor][8]}}>Wyślij</Button>
+                          </Group>
+                      </form>
+                  </>
+              )}
+          </Box>
+      </div>
+    );
+}
+
+
+interface BottomContactAreaProps{
+    handleScrollToMail: () => void;
+}
+
+const BottomContactArea = ({handleScrollToMail} : BottomContactAreaProps) => {
     const { classes } = useStyles();
+    const footerRef = useRef(null);
+    const [opened, setOpened] = useState(false);
+    const theme = useMantineTheme();
+
+    const { loading, error, data } = useQuery(ENTIRE_STATIC_CONTENT, {
+        fetchPolicy: 'network-only',
+        nextFetchPolicy: 'cache-first',
+    });
+
+    const handleModal = (value) => {
+        setOpened(value)
+    }
+
+    const contactOptions = [
+        {
+            svg: <PhoneCallMakeIcon/>,
+            title: 'Kliknij i zadzwoń!',
+            text: `${data?.stronaTytulowaZdjecieBiurkaInformacje?.data?.attributes?.KliknijZadzwon ?? ""}`,
+            onClick: () => window.open(`tel:+48${data?.stronaTytulowaZdjecieBiurkaInformacje?.data?.attributes?.KliknijZadzwon ?? ""}`),
+        },
+        {
+            svg: <PhoneCallReceiveIcon/>,
+            title: 'Kliknij i zostaw numer',
+            text: 'A my oddzwonimy!',
+            onClick: () => handleModal(true),
+        },
+        {
+            svg: <MailIcon/>,
+            title: 'Wyślij maila',
+            text: 'Zostaw wiadomość za pomocą formularza',
+            onClick: () => handleScrollToMail(),
+        },
+    ];
+
+
 
     return(
         <div className={classes.contactArea}>
-
+            <Modal
+                styles={{
+                    modal:{
+                        backgroundImage: `linear-gradient(-60deg, ${theme.colors[theme.primaryColor][4]} 0%, ${
+                            theme.colors[theme.primaryColor][7]
+                        } 100%)`,
+                    }
+                }}
+                className={classes.form}
+                opened={opened}
+                onClose={() => setOpened(false)}
+            >
+                <ModalContent handleModal={handleModal}/>
+            </Modal>
             <SimpleGrid className={classes.gridClass}
                         cols={3}
                         breakpoints={[
@@ -232,7 +429,7 @@ const BottomContactArea = () => {
                             { minWidth: 501, cols: 3 },
                         ]}
             >
-                {data.map((item)=> <CardExamples {...item}/>)}
+                {contactOptions.map((item)=> <CardExamples key={item.text} {...item}/>)}
             </SimpleGrid>
 
         </div>

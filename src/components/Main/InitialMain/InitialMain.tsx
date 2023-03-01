@@ -17,15 +17,18 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
 
 }));
 
+interface InitialMainProps{
+    handleScrollToMail: () => void;
+}
 
-const InitialMain = () => {
+const InitialMain = ({handleScrollToMail} : InitialMainProps) => {
     const { height: viewPortHeight, width: viewPortWidth } = useViewportSize();
     const { classes } = useStyles({ viewPortHeight, viewPortWidth });
 
     return(
         <BackGroundWithShapes>
             <Container size={"lg"} className={classes.container}>
-                <HeroBullets/>
+                <HeroBullets handleScrollToMail={handleScrollToMail}/>
             </Container>
         </BackGroundWithShapes>
     )

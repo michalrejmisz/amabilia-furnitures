@@ -1,3 +1,14 @@
-# https://www.robotstxt.org/robotstxt.html
+# *
 User-agent: *
-Disallow:
+Disallow: /404
+
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://amabilia-meble.pl
+
+# Sitemaps
+Sitemap: https://amabilia-meble.pl/sitemap.xml
+Sitemap: https://amabilia-meble.pl/server-sitemap.xml

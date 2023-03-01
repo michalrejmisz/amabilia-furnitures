@@ -9,6 +9,7 @@ import {
     createStyles,
     Text,
     Button,
+    UnstyledButton
 } from '@mantine/core';
 
 import { useViewportSize } from '@mantine/hooks';
@@ -27,6 +28,8 @@ import React, {
 } from 'react';
 import {ConditionalModal} from "./ConditionalModal";
 import {ProductComponent} from "../../Product/ProductComponent";
+import {useShoppingCart} from "@/context/ShoppingCartContext";
+
 
 const useStyles = createStyles((theme, _params, getRef) => ({
 
@@ -44,9 +47,9 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
     imageSection: {
         height: "200px",
-        width: "200px",
+        width: "auto",
         overflow: "hidden",
-        padding: theme.spacing.md,
+        padding: 0,
         margin: '0 auto',
         display: 'flex',
         alignItems: 'center',
@@ -59,7 +62,8 @@ const useStyles = createStyles((theme, _params, getRef) => ({
     image: {
         width: "100%",
         height: "auto",
-        objectFit: "cover",
+        // objectFit: "contain",
+        // objectFit: "cover",
     },
 
     hoverCart: {
@@ -68,6 +72,15 @@ const useStyles = createStyles((theme, _params, getRef) => ({
         color: "white",
         height: '75px',
         width: '100%',
+
+        "&:hover": {
+            // transform: 'scale(1.05)',
+            backgroundColor: theme.colors[theme.primaryColor][5],
+        },
+
+        "&:active": {
+            transform: 'scale(1.10)',
+        }
     },
 
     hoverBox: {
@@ -92,6 +105,9 @@ const useStyles = createStyles((theme, _params, getRef) => ({
     iconSearch: {
         color: "white",
         // color: theme.colors[theme.primaryColor][5],
+        "&:hover": {
+            transform: 'scale(1.20)',
+        }
     },
 
     label: {
@@ -124,6 +140,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
         wordWrap: "break-word",
         height: "3.5rem",
         display: "block",
+        color: theme.colors[theme.primaryColor][8]
     },
 
     a: {
@@ -140,93 +157,78 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 const Context = createContext({} as IProduct)
 
 export const SingleProductCard: React.FC<{product : IProduct}> = ({product}) => {
+    const {increaseCartQuantity, handleCartClick} = useShoppingCart()
     const {width} = useViewportSize();
     const [opened, setOpened] = useState(false);
     const { classes } = useStyles();
+    let modalWidth = 0.9*width;
 
-    // const handleModal =  {width > 768 ? (
-    //     <a href="#" onClick={handleModalOpen}>
-    //         Open Modal
-    //     </a>
-    // ) : (
-    //     <Link href="/page">
-    //         <a>Go to Page</a>
-    //     </Link>
-    // )};
+    let otherImages = null
+    otherImages = product?.images?.data?.map((img) => {
+        let thumbnailUrl = null
+        // if(img.attributes?.formats?.thumbnail?.url){
+            thumbnailUrl = process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FOLDER+
+                (img.attributes?.formats?.thumbnail?.url ? img.attributes?.formats?.thumbnail?.url : img.attributes?.url || "/uploads/no-thumb.png") +
+                "?format=webp";
+        // }
+        // let mediaItemUrl = process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FOLDER+img.attributes?.url+"?format=webp"
+        let mediaItemUrl = process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FOLDER +
+            (img.attributes?.formats?.large ? img.attributes.formats.large.url : img.attributes?.url || "/uploads/no-thumb.png") +
+            "?format=webp";
+        return{
+            mediaItemUrl,
+            thumbnailUrl
+        }
+    })
+
+    let imageThumbnail = product?.imagePrimary?.thumbnailUrl;
+    // if (!(product?.imagePrimary?.thumbnailUrl === "null")) {
+    //     imageThumbnail = product?.imagePrimary?.thumbnailUrl;
+    // }
 
     return(
         <>
             <Modal
                 opened={opened}
                 onClose={() => setOpened(false)}
-                size={1000}
+                size={1200}
             >
-                <ProductComponent product={product}/>
+                <ProductComponent product={{
+                        ...product,
+                        images: [
+                            ...otherImages
+                        ],
+                    }
+                }/>
             </Modal>
             <Card withBorder className={classes.card}>
                 <Link href={{ pathname: `/product/${product.slug}`}}>
                     <Card.Section className={classes.imageSection}>
-                        <Image src={product.imagePrimary.mediaItemUrl} alt="Tesla Model S" className={classes.image}/>
+                        <Image src={imageThumbnail} alt={product.title} className={classes.image} style={{ objectFit: "scale-down" }}/>
                     </Card.Section>
                 </Link>
 
                 {/* Hover Box Section */}
                 <Card.Section className={classes.hoverBox}>
-                    <ConditionalModal to={product.slug} openModal={() => setOpened(true)}>
-                        {/*<Link href={{ pathname: `/product/${product.slug}`}}>*/}
+                    <ConditionalModal to={product.slug?.toString() || "test"}  title={product.title} openModal={() => setOpened(true)}>
                                 <Center className={classes.search}>
-                                    {/*<Link href={{ pathname: `/product/${product.slug}`}}><IconSearch className={classes.iconSearch} size={70} stroke={1.5}/></Link>*/}
                                     <IconSearch className={classes.iconSearch} size={70} stroke={1.5}/>
                                 </Center>
                     </ConditionalModal>
-                                <Center className={classes.hoverCart}>
-                                    <IconShoppingCart size={35} stroke={1.5}    /> Dodaj do koszyka
-                                    <NumberInput
-                                        value={1}
-                                        min={1}
-                                        size="xs"
-                                        description=""
-                                        style={{width: "50px", marginLeft: "10px"}}
-                                    />
-                                </Center>
-                        {/*</Link>*/}
+                                <UnstyledButton  onClick={() => increaseCartQuantity(product.slug, product.price)}>
+                                    <Center className={classes.hoverCart}>
+                                        <IconShoppingCart size={35} stroke={1.5} /> Dodaj do koszyka
+                                    </Center>
+                                </UnstyledButton>
                 </Card.Section>
 
-                {/*<Group position="apart">*/}
                     <Card.Section className={classes.title}>
                         <div>
                             <Text weight={500} className={classes.titleWrap}>{product.title}</Text>
-                            {/*<Text weight={500}>Krzesło obrotowe z aluminiowymu kółkami</Text>*/}
-                            {/*<Text size="xs" color="dimmed">*/}
-                            {/*    Free recharge at any station*/}
-                            {/*</Text>*/}
+
                         </div>
                         <Badge variant="filled" size="xl">{product.price} zł</Badge>
                     </Card.Section>
-                {/*</Group>*/}
-
-
-
-                {/*<Card.Section className={classes.section} mt="md">*/}
-                {/*    <Text size="xl" color="dimmed" className={classes.label}>*/}
-                {/*        Krzesło obrotowe z aluminiowymu kółkami*/}
-                {/*    </Text>*/}
-                {/*</Card.Section>*/}
-
-                    {/*<Group spacing={8} mb={-8}>*/}
-                    {/*    <Center key="testuj">*/}
-                    {/*        <IconGasStation size={18} className={classes.icon} stroke={1.5} />*/}
-                    {/*        <Text size="xs">Testuje?</Text>*/}
-                    {/*    </Center>*/}
-
-                    {/*    <Center key="testuj">*/}
-                    {/*        <IconGasStation size={18} className={classes.icon} stroke={1.5} />*/}
-                    {/*        <Text size="xs">Testuje?</Text>*/}
-                    {/*    </Center>*/}
-                    {/*</Group>*/}
-
-
-
 
             </Card>
         </>

@@ -22,6 +22,8 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
 
             [theme.fn.smallerThan('xs')]: {
                 height: '1200px',
+                // minHeight: '100%',
+                // height: 'auto',
             },
 
         },
@@ -48,6 +50,7 @@ const useStyles = createStyles((theme, {viewPortHeight, viewPortWidth} : ViewPor
 
             [theme.fn.smallerThan('xs')]: {
                 height: '1200px',
+                // minHeight: '100%',
             },
 
         },
