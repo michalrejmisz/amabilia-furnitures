@@ -1,12 +1,10 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { gql, useQuery } from "@apollo/client";
-
+import { ApolloClient, InMemoryCache } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 
 export const client = new ApolloClient({
-    uri: "http://www.srv53487.seohost.com.pl/admin/graphql",
+    uri: 'http://www.srv53487.seohost.com.pl/admin/graphql',
     cache: new InMemoryCache(),
-});
-
+})
 
 // export const GET_PRODUCTS = gql`
 //     query GetProducts {
@@ -56,128 +54,146 @@ export const client = new ApolloClient({
 //     // return product;
 // }
 
-
-export const getCategoriesQuery = async() => {
+export const getCategoriesQuery = async () => {
     const categories = await client.query({
         query: gql`
-          query data {
-              kategorie {
-                edges {
-                  node {
-                    id
-                    name
-                    slug
-                    image {
-                      id
+            query data {
+                kategorie {
+                    edges {
+                        node {
+                            id
+                            name
+                            slug
+                            image {
+                                id
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
         `,
-    });
+    })
 
-    return categories;
+    return categories
 }
 
-export const getProductsQuery = async() => {
+export const getProductsQuery = async () => {
     const products = await client.query({
         query: gql`
             query MyQuery {
-              produkty {
-                edges {
-                  node {
-                    id
-                    slug
-                    title
-                    produktId
-                    price
-                    description
-                    categoryId {
-                      node {
-                        id
-                      }
+                produkty {
+                    edges {
+                        node {
+                            id
+                            slug
+                            title
+                            produktId
+                            price
+                            description
+                            categoryId {
+                                node {
+                                    id
+                                }
+                            }
+                            images {
+                                mediaItemUrl
+                                id
+                            }
+                            imagePrimary {
+                                altText
+                                mediaItemUrl
+                            }
+                        }
                     }
-                    images {
-                      mediaItemUrl
-                      id
-                    }
-                    imagePrimary {
-                      altText
-                      mediaItemUrl
-                    }
-                  }
                 }
-              }
             }
         `,
-    });
+    })
 
-    return products;
+    return products
 }
 
 // Get clean Categories arrays without nodes and edges.
-export const getCategories = async() => {
-    const categories = await getCategoriesQuery();
+export const getCategories = async () => {
+    const categories = await getCategoriesQuery()
     // return categories.data.kategorie.edges[0].node.name;
-    const edges = categories.data.kategorie.edges;
-    let categoriesArray = [];
+    const edges = categories.data.kategorie.edges
+    let categoriesArray = []
     edges.map((edge) => {
-        categoriesArray = [...categoriesArray, {id: edge.node.id, name: edge.node.name, slug: edge.node.slug, image: edge.node.image}]
+        categoriesArray = [
+            ...categoriesArray,
+            {
+                id: edge.node.id,
+                name: edge.node.name,
+                slug: edge.node.slug,
+                image: edge.node.image,
+            },
+        ]
     })
 
-    return categoriesArray;
+    return categoriesArray
 }
 
-export const getProducts = async() => {
-    const products = await getProductsQuery();
-    const edges = products.data.produkty.edges;
-    let productsArray = [];
+export const getProducts = async () => {
+    const products = await getProductsQuery()
+    const edges = products.data.produkty.edges
+    let productsArray = []
     edges.map((product) => {
         // if(product.node.image[0] != null){
         //     const images = product.node.images[0]?.map((image) => {mediaItemUrl : image.mediaItemUrl})
         //     console.log("OBRAZKI W APOLLO")
         //     console.log(images)
         // }
-        console.log("TEST PRZED APOLLO")
+        console.log('TEST PRZED APOLLO')
         console.log(product.node.images)
-        productsArray = [...productsArray, {
-            id: product.node.id,
-            slug: product.node.slug,
-            title: product.node.title,
-            description: product.node.description,
-            price: product.node.price,
-            categoryId: product.node.categoryId.node.id,
-            imagePrimary: {
-                altText: product.node.imagePrimary != null ? product.node.imagePrimary.altText : null,
-                mediaItemUrl: product.node.imagePrimary != null ? product.node.imagePrimary.mediaItemUrl : null,
+        productsArray = [
+            ...productsArray,
+            {
+                id: product.node.id,
+                slug: product.node.slug,
+                title: product.node.title,
+                description: product.node.description,
+                price: product.node.price,
+                categoryId: product.node.categoryId.node.id,
+                imagePrimary: {
+                    altText:
+                        product.node.imagePrimary != null
+                            ? product.node.imagePrimary.altText
+                            : null,
+                    mediaItemUrl:
+                        product.node.imagePrimary != null
+                            ? product.node.imagePrimary.mediaItemUrl
+                            : null,
+                },
+                images: [
+                    // product.node.images != null ? product.node.images.map((image) => image.mediaItemUrl) : null,
+                    product.node.images != null ? product.node.images : null,
+                ],
             },
-            images: [
-                // product.node.images != null ? product.node.images.map((image) => image.mediaItemUrl) : null,
-                product.node.images != null ? product.node.images : null,
-            ],
-        }]
+        ]
     })
-    return productsArray;
+    return productsArray
 }
 
-export const getProductsByCategory = async(category) =>{
-    const products = await getProducts();
-    const productsByCategory = products.filter((product) => product.categoryId === category.id)
-    return productsByCategory;
+export const getProductsByCategory = async (category) => {
+    const products = await getProducts()
+    const productsByCategory = products.filter(
+        (product) => product.categoryId === category.id
+    )
+    return productsByCategory
 }
 
-export const getCategoryBySlug = async(slug) => {
-    const categories = await getCategories();
-    const categoryBySlug = categories.filter((category) => category.slug == slug)
-    const category = categoryBySlug.length > 0 ? categoryBySlug[0] : null;
-    return category;
+export const getCategoryBySlug = async (slug) => {
+    const categories = await getCategories()
+    const categoryBySlug = categories.filter(
+        (category) => category.slug == slug
+    )
+    const category = categoryBySlug.length > 0 ? categoryBySlug[0] : null
+    return category
 }
 
-export const getProductBySlug = async(slug) =>{
-    const products = await getProducts();
+export const getProductBySlug = async (slug) => {
+    const products = await getProducts()
     const productBySlug = products.filter((products) => products.slug == slug)
-    return productBySlug[0];
+    return productBySlug[0]
 }
-
-

@@ -1,27 +1,24 @@
-// pages/server-sitemap.xml/index.tsx
 import { getServerSideSitemapLegacy } from 'next-sitemap'
 import { GetServerSideProps } from 'next'
-import {initializeApollo} from "@/lib/apolloClient";
-import {PRODUCTS_ALL} from "@/lib/graphql/products";
-import {CATEGORIES_ALL} from "@/lib/graphql/categories";
-
+import { initializeApollo } from '@/lib/apolloClient'
+import { PRODUCTS_ALL } from '@/lib/graphql/products'
+import { CATEGORIES_ALL } from '@/lib/graphql/categories'
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    // Method to source urls from cms
-    // const urls = await fetch('https//example.com/api')
     const apolloClient = initializeApollo()
-    const {data: product} = await apolloClient.query({
+    const { data: product } = await apolloClient.query({
         query: PRODUCTS_ALL,
     })
 
-    const {data: categories} = await apolloClient.query({
+    const { data: categories } = await apolloClient.query({
         query: CATEGORIES_ALL,
     })
 
-    const productsFields = product?.produkties?.data?.map((data) => ({
-        loc: `https://amabilia-meble.pl/product/${data.attributes.Link}`,
-        lastmod: new Date().toISOString(),
-    })) || [];
+    const productsFields =
+        product?.produkties?.data?.map((data) => ({
+            loc: `https://amabilia-meble.pl/product/${data.attributes.Link}`,
+            lastmod: new Date().toISOString(),
+        })) || []
 
     const categoriesFields = categories?.categories?.data?.map((data) => ({
         loc: `https://amabilia-meble.pl/products/category/${data.attributes.Link}`,

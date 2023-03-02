@@ -1,1 +1,1 @@
-export const ProductContext = () => {};
+export const ProductContext = () => {}

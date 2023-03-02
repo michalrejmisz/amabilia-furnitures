@@ -1,12 +1,15 @@
-import { createStyles, Title, Text, Button, Container, Group } from '@mantine/core';
-import { useRouter } from "next/router";
+import { createStyles, Title, Text, Container } from '@mantine/core'
+import { useRouter } from 'next/router'
 
 const useStyles = createStyles((theme) => ({
     root: {
-        height: "100vh",
-        paddingTop: "80px",
-        paddingBottom: "120px",
-        backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
+        height: '100vh',
+        paddingTop: '80px',
+        paddingBottom: '120px',
+        backgroundColor: theme.fn.variant({
+            variant: 'filled',
+            color: theme.primaryColor,
+        }).background,
     },
 
     label: {
@@ -35,25 +38,24 @@ const useStyles = createStyles((theme) => ({
     },
 
     description: {
-        maxWidth: "540px",
+        maxWidth: '540px',
         margin: 'auto',
         marginTop: theme.spacing.xl,
         marginBottom: `calc(${theme.spacing.xl} * 1.5)`,
         color: theme.colors[theme.primaryColor][1],
     },
-}));
+}))
 
-export default function FourOhFour(){
-    const { classes } = useStyles();
-    const router = useRouter();
+export default function FourOhFour() {
+    const { classes } = useStyles()
+    const router = useRouter()
 
     const handleRedirect = () => {
-        router.push('/');
-    };
+        router.push('/')
+    }
 
     // Delay redirect by 5 seconds
-    setTimeout(handleRedirect, 3500);
-
+    setTimeout(handleRedirect, 3500)
 
     return (
         <div className={classes.root}>
@@ -61,10 +63,10 @@ export default function FourOhFour(){
                 <div className={classes.label}>404</div>
                 <Title className={classes.title}>Coś poszło nie tak...</Title>
                 <Text size="lg" align="center" className={classes.description}>
-                    Niestety podana podstrona nie istnieje. Za chwilę przekierujemy Cię na stronę główną.
+                    Niestety podana podstrona nie istnieje. Za chwilę
+                    przekierujemy Cię na stronę główną.
                 </Text>
             </Container>
         </div>
-    );
+    )
 }
-

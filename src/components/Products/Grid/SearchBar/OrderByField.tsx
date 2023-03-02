@@ -1,20 +1,15 @@
-import {
-    Center,
-    Select,
-    createStyles,
-} from '@mantine/core';
+import { Center, Select, createStyles } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
     orderBy: {
         margin: '10px',
         alignSelf: 'flex-start',
-    }
+    },
 }))
-
 
 export const OrderByField = () => {
     const { classes } = useStyles()
-    return(
+    return (
         <div className={classes.orderBy}>
             <Center>
                 <Select
@@ -31,4 +26,3 @@ export const OrderByField = () => {
         </div>
     )
 }
-

@@ -1,20 +1,18 @@
 import {
-    Container,
     Image,
     Grid,
     createStyles,
     Text,
     Title,
-    BackgroundImage,
     useMantineTheme,
     Center,
-} from '@mantine/core';
-import { Carousel } from '@mantine/carousel';
-import {useQuery} from "@apollo/client";
-import {PRODUCTS_ALL} from "@/lib/graphql/products";
-import {BANER_PRODUCT_PAGE} from "@/lib/graphql/pagesContent";
-import Autoplay from 'embla-carousel-autoplay';
-import {useRef} from "react";
+} from '@mantine/core'
+import { Carousel } from '@mantine/carousel'
+import { useQuery } from '@apollo/client'
+import { PRODUCTS_ALL } from '@/lib/graphql/products'
+import { BANER_PRODUCT_PAGE } from '@/lib/graphql/pagesContent'
+import Autoplay from 'embla-carousel-autoplay'
+import { useRef } from 'react'
 
 const useStyles = createStyles((theme) => ({
     banner: {
@@ -22,31 +20,13 @@ const useStyles = createStyles((theme) => ({
         marginTop: '20px',
         minHeight: '250px',
         maxHeight: '250px',
-        // background: "rgb(34,139,230)",
-        // background: "linear-gradient(135deg, rgba(34,139,230,1) 45%, rgba(77,171,247,1) 45%)",
-        // backgroundImage: `linear-gradient(-60deg, ${theme.colors[theme.primaryColor][4]} 0%, ${
-        //     theme.colors[theme.primaryColor][7]
-        // } 100%)`,
-        // https://www.shutterstock.com/pl/image-photo/white-van-delivery-packages-1767788948
-        backgroundImage:
-            `linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, ${theme.colors[theme.primaryColor][6]} 50%), url(/images/truck5.webp)`,
+        backgroundImage: `linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, ${theme.colors[theme.primaryColor][6]} 50%), url(/images/truck5.webp)`,
     },
 
     imageBanner: {
-        // minWidth: "50%",
-        // width: "calc(24.8vw)",
-        // position: "relative",
-        width: "auto",
-        height: "150px",
-        padding: "25px",
-        // paddingRight: "150px",
-        // top: "70%",
-        // webkitTransform: "translateY(-50%)",
-        // mozTransform: "translateY(-50%)",
-        // msTransform: "translateY(-50%)",
-        // oTransform: "translateY(-50%)",
-        // transform: "translateY(-50%)",
-        // left: 0,
+        width: 'auto',
+        height: '150px',
+        padding: '25px',
     },
 
     fillHeight: {
@@ -65,10 +45,9 @@ const useStyles = createStyles((theme) => ({
 
     title: {
         fontFamily: 'Roboto, sans-serif',
-        // fontFamily: `Greycliff CF, ${theme.fontFamily}`,
         color: theme.white,
         fontSize: 40,
-        letterSpacing: "3px",
+        letterSpacing: '3px',
         fontWeight: 700,
         lineHeight: 1.1,
 
@@ -93,27 +72,34 @@ const useStyles = createStyles((theme) => ({
             fontSize: theme.fontSizes.md,
         },
     },
-
-}));
+}))
 
 export const InformationBanner = () => {
-    const {classes} = useStyles();
+    const { classes } = useStyles()
     const { data } = useQuery(BANER_PRODUCT_PAGE)
-    const theme = useMantineTheme();
-    const autoplay = useRef(Autoplay({ delay: data?.baner?.data?.attributes?.PredkoscBanera ?? 2000 }));
+    const theme = useMantineTheme()
+    const autoplay = useRef(
+        Autoplay({
+            delay: data?.baner?.data?.attributes?.PredkoscBanera ?? 2000,
+        })
+    )
 
     const firstBaner = (
         <div className={classes.fillHeight}>
             <div className={classes.row}>
                 <Grid>
-                    <Grid.Col span={12} p={"55px"}>
-                        {/*<Grid.Col span={7} p={"55px"}>*/}
+                    <Grid.Col span={12} p={'55px'}>
                         <Title className={classes.title}>
                             <Center>
                                 {data?.baner?.data?.attributes?.Tytul}
                             </Center>
                         </Title>
-                        <Text className={classes.description} size="xl" mt="xl" style={{color: theme.white}}>
+                        <Text
+                            className={classes.description}
+                            size="xl"
+                            mt="xl"
+                            style={{ color: theme.white }}
+                        >
                             <Center>
                                 {data?.baner?.data?.attributes?.Podtytul}
                             </Center>
@@ -128,7 +114,7 @@ export const InformationBanner = () => {
             </div>
         </div>
     )
-    return(
+    return (
         <div className={classes.banner}>
             {data?.baner?.data?.attributes?.WlasneBanery.length > 0 ? (
                 <>
@@ -141,20 +127,23 @@ export const InformationBanner = () => {
                         <Carousel.Slide key="first">
                             {firstBaner}
                         </Carousel.Slide>
-                        {data?.baner?.data?.attributes?.WlasneBanery.map((photo, index) => {
-                            return(
-                                <Carousel.Slide key={index}>
-                                    <Image height="250px" src={`${process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FOLDER}${photo.Zdjecie.data.attributes.url}${"?format=webp"}`}/>
-                                </Carousel.Slide>
-                            );
-                        })}
+                        {data?.baner?.data?.attributes?.WlasneBanery.map(
+                            (photo, index) => {
+                                return (
+                                    <Carousel.Slide key={index}>
+                                        <Image
+                                            height="250px"
+                                            src={`${process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FOLDER}${photo.Zdjecie.data.attributes.url}${'?format=webp'}`}
+                                        />
+                                    </Carousel.Slide>
+                                )
+                            }
+                        )}
                     </Carousel>
                 </>
             ) : (
-                <>
-                    {firstBaner}
-                </>
+                <>{firstBaner}</>
             )}
         </div>
-    );
+    )
 }
